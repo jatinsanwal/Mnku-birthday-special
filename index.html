@@ -1,446 +1,298 @@
-<!DOCTYPE html>
-<html lang="hi">
+ <!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday ❤️</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mnku ji ❤️</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            height: 100vh;
-            position: relative;
-            background: #000;
-            color: white;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:sans-serif;overflow:hidden;background:black;}
 
-        .page {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-            background-size: cover !important;
-            background-position: center !important;
-            background-repeat: no-repeat !important;
-            padding: 20px;
-            text-align: center;
-        }
+.page{
+position:absolute;
+width:100%;
+height:100vh;
+background-size:cover;
+background-position:center;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+opacity:0;
+transition:1s;
+}
 
-        .page.active {
-            opacity: 1;
-            z-index: 10;
-        }
+.page.active{opacity:1;z-index:10;}
 
-        .page.prev {
-            opacity: 0;
-        }
+.content{
+text-align:center;
+color:white;
+text-shadow:0 0 10px black;
+padding:20px;
+}
 
-        .content {
-            max-width: 90%;
-            max-height: 80vh;
-            overflow: hidden;
-        }
+.title{font-size:2.5em;margin-bottom:20px;color:#ff4da6;}
 
-        h1, h2 {
-            font-size: clamp(2rem, 8vw, 4rem);
-            margin-bottom: 20px;
-            line-height: 1.2;
-            text-shadow: 0 0 20px rgba(255,255,255,0.5);
-        }
+.line{font-size:1.4em;margin:10px 0;}
 
-        .typing-text {
-            border-right: 3px solid #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
-        }
+.btn{
+background:#ff4da6;
+border:none;
+padding:12px 25px;
+border-radius:30px;
+color:white;
+font-size:1.2em;
+margin-top:20px;
+}
 
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
+img,video{
+width:90%;
+max-width:300px;
+border-radius:15px;
+margin:10px;
+}
 
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: #fff; }
-        }
+.grid{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+}
 
-        .btn {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.5);
-            color: white;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px;
-            min-width: 120px;
-        }
-
-        .btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(255,255,255,0.3);
-        }
-
-        .music-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: rgba(255,0,0,0.8);
-            border: none;
-        }
-
-        .music-playing {
-            background: rgba(0,255,0,0.8) !important;
-        }
-
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            max-width: 90vw;
-            max-height: 60vh;
-            overflow: auto;
-            padding: 20px;
-        }
-
-        .photo {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
-        }
-
-        .photo:hover {
-            transform: scale(1.05);
-        }
-
-        .our-photo {
-            border-radius: 25px;
-            border: 3px solid rgba(255,255,255,0.3);
-        }
-
-        video {
-            width: 90vw;
-            max-width: 800px;
-            max-height: 70vh;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-        }
-
-        .hearts {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .heart {
-            position: absolute;
-            color: #ff4d4d;
-            font-size: 20px;
-            pointer-events: none;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .celebration {
-            text-align: center;
-            font-size: clamp(3rem, 12vw, 6rem);
-            color: #ffd700;
-            text-shadow: 0 0 30px #ffd700;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        @media (max-width: 768px) {
-            .photo-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            
-            video {
-                width: 95vw;
-                height: auto;
-            }
-        }
-    </style>
+.hearts{position:fixed;width:100%;height:100%;pointer-events:none;}
+.heart{
+position:absolute;
+font-size:20px;
+animation:fall linear forwards;
+}
+@keyframes fall{
+0%{transform:translateY(-100vh);}
+100%{transform:translateY(100vh);}
+}
+</style>
 </head>
+
 <body>
-    <div class="music-btn btn" id="musicBtn">🎵 Music</div>
-    <audio id="bgMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
 
-    <div class="hearts" id="hearts"></div>
+<audio id="music" src="music.mp3" loop></audio>
+<div class="hearts" id="hearts"></div>
 
-    <!-- Page 1: Intro -->
-    <div class="page active" style="background-image: url('bg1.jpg');">
-        <div class="content">
-            <h1>Happy Birthday</h1>
-            <h2>मेरी जान ❤️</h2>
-            <button class="btn" onclick="nextPage()">Start</button>
-        </div>
-    </div>
+<!-- PAGES -->
 
-    <!-- Page 2 -->
-    <div class="page" style="background-image: url('bg2.jpg');">
-        <div class="content">
-            <h1 class="typing-text" data-text="आज का दिन आपके लिए बहुत खास है...">आज का दिन आपके लिए बहुत खास है...</h1>
-            <button class="btn" onclick="nextPage()">Next</button>
-        </div>
-    </div>
+<div class="page active" style="background-image:url(bg1.jpg)">
+<div class="content">
+<div class="title">Mnku ji ❤️</div>
+<div class="line" id="l1"></div>
+<div class="line" id="l2"></div>
+<button class="btn" onclick="start()">Start</button>
+</div>
+</div>
 
-    <!-- Page 3 -->
-    <div class="page" style="background-image: url('bg3.jpg');">
-        <div class="content">
-            <h1 class="typing-text" data-text="क्योंकि यह आपका जन्मदिन है ❤️">क्योंकि यह आपका जन्मदिन है ❤️</h1>
-            <button class="btn" onclick="nextPage()">Next</button>
-        </div>
-    </div>
+<div class="page" style="background-image:url(bg2.jpg)">
+<div class="content">
+<div class="line" id="p2l1"></div>
+<div class="line" id="p2l2"></div>
+<div class="line" id="p2l3"></div>
+</div>
+</div>
 
-    <!-- Page 4 -->
-    <div class="page" style="background-image: url('bg4.jpg');">
-        <div class="content">
-            <h1 class="typing-text" data-text="आपके बिना यह दुनिया अधूरी है...">आपके बिना यह दुनिया अधूरी है...</h1>
-            <button class="btn" onclick="nextPage()">Next</button>
-        </div>
-    </div>
+<div class="page" style="background-image:url(bg3.jpg)">
+<div class="content">
+<div class="line" id="p3l1"></div>
+<div class="line" id="p3l2"></div>
+<div class="line" id="p3l3"></div>
+</div>
+</div>
 
-    <!-- Pages 5-7: Her Photos -->
-    <div class="page" style="background-image: url('bg5.jpg');">
-        <div class="content">
-            <h2>आपकी खूबसूरती ❤️</h2>
-            <div class="photo-grid">
-                <img src="her1.jpg" class="photo" alt="">
-                <img src="her2.jpg" class="photo" alt="">
-                <img src="her3.jpg" class="photo" alt="">
-                <img src="her4.jpg" class="photo" alt="">
-            </div>
-            <button class="btn" onclick="nextPage()">Next</button>
-        </div>
-    </div>
+<div class="page" style="background-image:url(bg4.jpg)">
+<div class="content">
+<div class="line" id="p4l1"></div>
+<div class="line" id="p4l2"></div>
+<div class="line" id="p4l3"></div>
+</div>
+</div>
 
-    <div class="page" style="background-image: url('bg6.jpg');">
-        <div class="content">
-            <h2>मेरी दुनिया ❤️</h2>
-            <div class="photo-grid">
-                <img src="her5.jpg" class="photo" alt="">
-                <img src="her6.jpg" class="photo" alt="">
-                <img src="her7.jpg" class="photo" alt="">
-                <img src="her8.jpg" class="photo" alt="">
-            </div>
-            <button class="btn" onclick="nextPage()">Next</button>
-        </div>
-    </div>
+<div class="page" style="background-image:url(bg5.jpg)">
+<div class="content">
+<div class="line" id="p5l1"></div>
+<div class="line" id="p5l2"></div>
+<div class="grid">
+<img src="her1.jpg"><img src="her2.jpg"><img src="her3.jpg">
+</div>
+</div>
+</div>
 
-    <!-- Pages 8-9: Our Photos -->
-    <div class="page" style="background-image: url('bg7.jpg');">
-        <div class="content">
-            <h2>हमारी यादें ❤️</h2>
-            <div class="photo-grid">
-                <img src="us1.jpg" class="photo our-photo" alt="">
-                <img src="us2.jpg" class="photo our-photo" alt="">
-                <img src="us3.jpg" class="photo our-photo" alt="">
-            </div>
-            <button class="btn" onclick="nextPage()">Next</button>
-        </div>
-    </div>
+<div class="page" style="background-image:url(bg6.jpg)">
+<div class="content">
+<div class="line" id="p6l1"></div>
+<div class="line" id="p6l2"></div>
+<div class="grid">
+<img src="her4.jpg"><img src="her5.jpg"><img src="her6.jpg">
+</div>
+</div>
+</div>
 
-    <div class="page" style="background-image: url('bg8.jpg');">
-        <div class="content">
-            <h2>हमेशा साथ ❤️</h2>
-            <div class="photo-grid">
-                <img src="us4.jpg" class="photo our-photo" alt="">
-                <img src="us5.jpg" class="photo our-photo" alt="">
-            </div>
-            <button class="btn" onclick="nextPage()">Next</button>
-        </div>
-    </div>
+<div class="page" style="background-image:url(bg7.jpg)">
+<div class="content">
+<div class="line" id="p7l1"></div>
+<div class="line" id="p7l2"></div>
+<div class="grid">
+<img src="her7.jpg"><img src="her8.jpg">
+</div>
+</div>
+</div>
 
-    <!-- Page 10: Videos v1, v2 -->
-    <div class="page" style="background-image: url('bg9.jpg');">
-        <div class="content">
-            <h2>खास पल ❤️</h2>
-            <video controls>
-                <source src="v1.mp4" type="video/mp4">
-            </video>
-            <button class="btn" onclick="nextPage()">Next</button>
-        </div>
-    </div>
+<div class="page" style="background-image:url(bg8.jpg)">
+<div class="content">
+<div class="line" id="p8l1"></div>
+<div class="line" id="p8l2"></div>
+<div class="grid">
+<img src="us1.jpg"><img src="us2.jpg">
+</div>
+</div>
+</div>
 
-    <!-- Page 11: Our videos -->
-    <div class="page" style="background-image: url('bg10.jpg');">
-        <div class="content">
-            <h2>हमारे पल ❤️</h2>
-            <video controls>
-                <source src="usv1.mp4" type="video/mp4">
-            </video>
-            <button class="btn" onclick="nextPage()">Next</button>
-        </div>
-    </div>
+<div class="page" style="background-image:url(bg9.jpg)">
+<div class="content">
+<div class="line" id="p9l1"></div>
+<div class="line" id="p9l2"></div>
+<div class="grid">
+<img src="us3.jpg"><img src="us4.jpg"><img src="us5.jpg">
+</div>
+</div>
+</div>
 
-    <!-- Page 12: msg.mp4 -->
-    <div class="page" style="background-image: url('bg11.jpg');">
-        <div class="content">
-            <h2>खास संदेश ❤️</h2>
-            <video controls>
-                <source src="msg.mp4" type="video/mp4">
-            </video>
-            <button class="btn" onclick="nextPage()">Next</button>
-        </div>
-    </div>
+<div class="page" style="background-image:url(bg10.jpg)">
+<div class="content">
+<div class="line" id="p10l1"></div>
+<div class="line" id="p10l2"></div>
+<video src="v1.mp4" autoplay muted loop></video>
+<video src="v2.mp4" autoplay muted loop></video>
+</div>
+</div>
 
-    <!-- Page 13: cake.mp4 -->
-    <div class="page" style="background-image: url('bg12.jpg');">
-        <div class="content">
-            <h2>केक कटिंग ❤️</h2>
-            <video controls id="cakeVideo" onended="showCelebration()">
-                <source src="cake.mp4" type="video/mp4">
-            </video>
-            <button class="btn" onclick="showCelebration()" style="display: none;" id="cakeBtn">Celebrate</button>
-        </div>
-    </div>
+<div class="page" style="background-image:url(bg11.jpg)">
+<div class="content">
+<div class="line" id="p11l1"></div>
+<div class="line" id="p11l2"></div>
+<video src="usv1.mp4" autoplay muted loop></video>
+<video src="usv2.mp4" autoplay muted loop></video>
+<video src="msg.mp4" autoplay muted loop></video>
+</div>
+</div>
 
-    <!-- Final Page -->
-    <div class="page" style="background-image: url('bg12.jpg');" id="finalPage">
-        <div class="content">
-            <div class="celebration" id="celebrationText">Happy Birthday ❤️</div>
-            <h2 style="margin-top: 20px;">आपको जन्मदिन की हार्दिक शुभकामनाएं!</h2>
-            <p style="font-size: 1.2rem; opacity: 0.9; max-width: 80%; margin: 20px auto;">
-                आप मेरी जिंदगी का सबसे खूबसूरत तोहफा हैं। 
-                हमेशा खुश रहें, मुस्कुराते रहें ❤️
-            </p>
-        </div>
-    </div>
+<div class="page" style="background-image:url(bg12.jpg)">
+<div class="content">
+<video src="cake.mp4" autoplay muted loop></video>
+<div class="title">Happy Birthday Mnku ji ❤️</div>
+<div class="line" id="p12l1"></div>
+<div class="line" id="p12l2"></div>
+</div>
+</div>
 
-    <script>
-        let currentPage = 0;
-        const pages = document.querySelectorAll('.page');
-        const musicBtn = document.getElementById('musicBtn');
-        const bgMusic = document.getElementById('bgMusic');
-        let musicPlaying = false;
-        let heartsInterval;
+<script>
 
-        // Initialize typing effect
-        document.querySelectorAll('.typing-text').forEach(el => {
-            const text = el.getAttribute('data-text');
-            el.textContent = text;
-        });
+let pages=document.querySelectorAll(".page");
+let current=0;
 
-        // Music control
-        musicBtn.addEventListener('click', () => {
-            if (musicPlaying) {
-                bgMusic.pause();
-                musicBtn.textContent = '🎵 Music';
-                musicBtn.classList.remove('music-playing');
-                musicPlaying = false;
-            } else {
-                bgMusic.play();
-                musicBtn.textContent = '⏸️ Pause';
-                musicBtn.classList.add('music-playing');
-                musicPlaying = true;
-            }
-        });
+function show(i){
+pages[current].classList.remove("active");
+current=i;
+pages[current].classList.add("active");
+}
 
-        // Heart animation
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '💖';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
-            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
-            document.getElementById('hearts').appendChild(heart);
+function start(){
+document.getElementById("music").play();
+next();
+}
 
-            setTimeout(() => {
-                heart.remove();
-            }, 6000);
-        }
+function next(){
+if(current<pages.length-1){
+show(current+1);
+runText(current);
+}
+}
 
-        // Start hearts
-        heartsInterval = setInterval(createHeart, 300);
+setInterval(()=>{ if(current>0) next(); },6000);
 
-        // Page navigation
-        function nextPage() {
-            pages[currentPage].classList.remove('active');
-            pages[currentPage].classList.add('prev');
-            
-            currentPage++;
-            if (currentPage < pages.length) {
-                pages[currentPage].classList.add('active');
-            }
-        }
+// TYPEWRITER
+function type(id,text){
+let el=document.getElementById(id);
+let i=0;
+let int=setInterval(()=>{
+el.innerHTML+=text[i];
+i++;
+if(i>=text.length) clearInterval(int);
+},40);
+}
 
-        function showCelebration() {
-            document.getElementById('cakeBtn').style.display = 'none';
-            pages[currentPage].style.backgroundImage = "url('bg12.jpg')";
-            pages[currentPage].innerHTML = pages[pages.length - 1].innerHTML;
-            pages[currentPage].id = 'finalPage';
-            pages[currentPage].classList.add('active');
-            
-            // Extra celebration hearts
-            setInterval(createHeart, 150);
-        }
+// TEXT FLOW
+function runText(p){
+if(p==1){
+type("p2l1","Aaj ka din normal nahi hai...");
+type("p2l2","kyunki aaj ek bohot special insaan ka birthday hai...");
+type("p2l3","jo mere liye sabse important hai...");
+}
+if(p==2){
+type("p3l1","aaj duniya ki sabse pyaari ladki ka birthday hai ❤️");
+type("p3l2","jo sabko khush rakhti hai...");
+type("p3l3","aur khud itni pyari smile karti hai...");
+}
+if(p==3){
+type("p4l1","main bas ye chahta hu...");
+type("p4l2","ki aaj ka din unke liye perfect ho...");
+type("p4l3","aur wo hamesha smile kare...");
+}
+if(p==4){
+type("p5l1","unki ye smile...");
+type("p5l2","sach me sabse alag hai...");
+}
+if(p==5){
+type("p6l1","jab bhi unhe dekhta hu...");
+type("p6l2","dil khush ho jata hai...");
+}
+if(p==6){
+type("p7l1","aap bohot special ho...");
+type("p7l2","aur hamesha rahoge...");
+}
+if(p==7){
+type("p8l1","ye moments...");
+type("p8l2","mere liye sabse precious hai...");
+}
+if(p==8){
+type("p9l1","main bas ye chahta hu...");
+type("p9l2","ye moments kabhi khatam na ho...");
+}
+if(p==9){
+type("p10l1","ye choti choti yaadein...");
+type("p10l2","mere liye sab kuch hai...");
+}
+if(p==10){
+type("p11l1","aur ye special message...");
+type("p11l2","sirf aapke liye hai...");
+}
+if(p==11){
+type("p12l1","aap mere liye bohot special ho...");
+type("p12l2","I love you ❤️");
+}
+}
 
-        // Touch/swipe support for mobile
-        let startY = 0;
-        document.addEventListener('touchstart', e => {
-            startY = e.touches[0].clientY;
-        });
+// PAGE 1 TEXT
+type("l1","aaj ka din mere liye bohot special hai...");
+type("l2","maine aapke liye kuch banaya hai...");
 
-        document.addEventListener('touchend', e => {
-            const endY = e.changedTouches[0].clientY;
-            if (startY - endY > 50 && currentPage < pages.length - 1) {
-                nextPage();
-            }
-        });
+// HEARTS
+setInterval(()=>{
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=(Math.random()*3+2)+"s";
+document.getElementById("hearts").appendChild(h);
+setTimeout(()=>h.remove(),5000);
+},300);
 
-        // Keyboard support
-        document.addEventListener('keydown', e => {
-            if (e.key === 'ArrowRight' || e.key === ' ') {
-                e.preventDefault();
-                nextPage();
-            }
-        });
+</script>
 
-        // Prevent context menu on mobile
-        document.addEventListener('contextmenu', e => e.preventDefault());
-    </script>
 </body>
-</html>
+</html>        
