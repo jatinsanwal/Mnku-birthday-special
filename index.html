@@ -5,52 +5,62 @@
 <title>Mnku ❤️</title>
 
 <style>
-body,html{
+*{
 margin:0;
 padding:0;
-overflow:hidden;
+box-sizing:border-box;
 font-family:sans-serif;
 }
 
-.page{
+body{
+overflow-x:hidden;
+scroll-behavior:smooth;
+}
+
+.section{
+width:100%;
+height:100vh;
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+}
+
+.bg{
 position:absolute;
 width:100%;
 height:100%;
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-color:white;
-padding:20px;
+top:0;
+left:0;
 background-size:cover;
 background-position:center;
+z-index:-1;
 }
-
-.active{display:flex;}
 
 .overlay{
 position:absolute;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.55);
+background:rgba(0,0,0,0.5);
 top:0;
 left:0;
 }
 
 .content{
-z-index:2;
+padding:20px;
 max-width:90%;
 }
 
 h1{
-font-size:32px;
+font-size:34px;
 margin-bottom:15px;
 }
 
 p{
 font-size:20px;
-line-height:1.5;
+line-height:1.6;
 }
 
 .btn{
@@ -63,27 +73,28 @@ color:white;
 font-size:16px;
 }
 
-img,video{
-width:95%;
-max-width:400px;
+/* FULL SCREEN IMAGE FIX */
+img, video{
+width:100%;
+max-height:80vh;
+object-fit:cover;
 border-radius:15px;
 margin:10px 0;
 }
 
-/* hearts optimized */
+/* LIGHT HEARTS (NO LAG) */
 .heart{
-position:absolute;
+position:fixed;
 color:red;
-font-size:16px;
-animation:fall 6s linear infinite;
-opacity:0.7;
+font-size:14px;
+animation:fall linear infinite;
+opacity:0.6;
 }
 
 @keyframes fall{
-0%{transform:translateY(-10%);}
+0%{transform:translateY(-10vh);}
 100%{transform:translateY(110vh);}
 }
-
 </style>
 </head>
 
@@ -92,171 +103,139 @@ opacity:0.7;
 <audio id="music" src="music.mp3" loop></audio>
 
 <!-- PAGE 1 -->
-<div class="page active" style="background:url(bg1.jpg)">
+<section class="section">
+<div class="bg" style="background-image:url(bg1.jpg)"></div>
 <div class="overlay"></div>
 <div class="content">
 <h1>Mnku ji... ❤️</h1>
-<p>tumhare liye kuch bohot special banaya hai...  
-aaj bas aaram se dekhna 😊</p>
-<button class="btn" onclick="next()">Enter 👀</button>
+<p>tumhare liye kuch special banaya hai 😊</p>
 <button class="btn" onclick="play()">🎵 Music</button>
 </div>
-</div>
+</section>
 
 <!-- PAGE 2 -->
-<div class="page" style="background:url(bg2.jpg)">
+<section class="section">
+<div class="bg" style="background-image:url(bg2.jpg)"></div>
 <div class="overlay"></div>
 <div class="content">
 <p>
 Aaj ka din normal nahi hai... ❤️<br><br>
-kyunki aaj duniya ki sabse pyari ladki ka birthday hai 🥺❤️<br><br>
-aur mujhe ye din thoda sa special banana tha...
+kyunki aaj sabse special insaan ka birthday hai 🥺❤️<br><br>
+aur main chahta hu ye din thoda alag ho...
 </p>
-<button class="btn" onclick="next()">Next</button>
 </div>
-</div>
+</section>
 
 <!-- PAGE 3 -->
-<div class="page" style="background:url(bg3.jpg)">
+<section class="section">
+<div class="bg" style="background-image:url(bg3.jpg)"></div>
 <div class="overlay"></div>
 <div class="content">
-<h1>Sabse pyari tum 😍</h1>
+<h1>Bas tum ❤️</h1>
 <img src="her1.jpg">
 <img src="her2.jpg">
-<img src="her3.jpg">
-<img src="her4.jpg">
-<button class="btn" onclick="next()">Next</button>
 </div>
-</div>
+</section>
 
 <!-- PAGE 4 -->
-<div class="page" style="background:url(bg4.jpg)">
+<section class="section">
+<div class="bg" style="background-image:url(bg4.jpg)"></div>
 <div class="overlay"></div>
 <div class="content">
-<h1>Hamari memories ❤️</h1>
-<img src="us1.jpg">
-<img src="us2.jpg">
-<img src="us3.jpg">
-<button class="btn" onclick="next()">Next</button>
+<img src="her3.jpg">
+<img src="her4.jpg">
 </div>
-</div>
+</section>
 
 <!-- PAGE 5 -->
-<div class="page" style="background:url(bg5.jpg)">
+<section class="section">
+<div class="bg" style="background-image:url(bg5.jpg)"></div>
 <div class="overlay"></div>
 <div class="content">
 <h1>Moments 🎥</h1>
 <video src="v1.mp4" controls></video>
-<video src="v2.mp4" controls></video>
-<button class="btn" onclick="next()">Next</button>
 </div>
-</div>
+</section>
 
 <!-- PAGE 6 -->
-<div class="page" style="background:url(bg6.jpg)">
+<section class="section">
+<div class="bg" style="background-image:url(bg6.jpg)"></div>
+<div class="overlay"></div>
+<div class="content">
+<video src="v2.mp4" controls></video>
+</div>
+</section>
+
+<!-- PAGE 7 -->
+<section class="section">
+<div class="bg" style="background-image:url(bg7.jpg)"></div>
 <div class="overlay"></div>
 <div class="content">
 <p>
 Kabhi kabhi tumhari yaad aati hai... 🥺<br><br>
-aur tab bas ek hi wish hoti hai...<br>
-kaash tum paas hoti ❤️
+aur bas ek hi feeling hoti hai... ❤️
 </p>
-<button class="btn" onclick="next()">Next</button>
 </div>
-</div>
-
-<!-- PAGE 7 -->
-<div class="page" style="background:url(bg7.jpg)">
-<div class="overlay"></div>
-<div class="content">
-<p>
-Door hoke bhi tum meri life ka sabse important part ho ❤️<br><br>
-aur rahogi...
-</p>
-<button class="btn" onclick="next()">Next</button>
-</div>
-</div>
+</section>
 
 <!-- PAGE 8 -->
-<div class="page" style="background:url(bg8.jpg)">
+<section class="section">
+<div class="bg" style="background-image:url(bg8.jpg)"></div>
 <div class="overlay"></div>
 <div class="content">
 <h1>Happy Birthday 🎂</h1>
-<p>
-Aaj ka din sirf tumhara hai ❤️<br>
-aur tum deserve karti ho sab kuch best
-</p>
-<button class="btn" onclick="next()">Next</button>
+<p>Stay happy always ❤️</p>
 </div>
-</div>
+</section>
 
 <!-- PAGE 9 -->
-<div class="page" style="background:url(bg9.jpg)">
+<section class="section">
+<div class="bg" style="background-image:url(bg9.jpg)"></div>
 <div class="overlay"></div>
 <div class="content">
-<h1>Surprise 🎁</h1>
 <video src="cake.mp4" controls></video>
-<video src="msg.mp4" controls></video>
-<button class="btn" onclick="next()">Next</button>
 </div>
-</div>
+</section>
 
 <!-- PAGE 10 -->
-<div class="page" style="background:url(bg10.jpg)">
+<section class="section">
+<div class="bg" style="background-image:url(bg10.jpg)"></div>
 <div class="overlay"></div>
 <div class="content">
-<p>
-Tum meri life ka sabse beautiful part ho ❤️<br><br>
-aur main seriously lucky hu ki tum meri life me ho
-</p>
-<button class="btn" onclick="next()">Next</button>
+<p>Tum meri life ka best part ho ❤️</p>
 </div>
-</div>
+</section>
 
 <!-- PAGE 11 -->
-<div class="page" style="background:url(bg11.jpg)">
+<section class="section">
+<div class="bg" style="background-image:url(bg11.jpg)"></div>
 <div class="overlay"></div>
 <div class="content">
-<p>
-Main tumhe bahut zyada pasand karta hu... ❤️<br><br>
-aur shayad jitna bolta hu usse bhi zyada
-</p>
-<button class="btn" onclick="next()">Next</button>
+<p>Main tumhe bohot pasand karta hu ❤️</p>
 </div>
-</div>
+</section>
 
 <!-- PAGE 12 -->
-<div class="page" style="background:url(bg12.jpg)">
+<section class="section">
+<div class="bg" style="background-image:url(bg12.jpg)"></div>
 <div class="overlay"></div>
 <div class="content">
 <h1>I LOVE YOU ❤️</h1>
-<button class="btn" onclick="location.reload()">Replay 🔁</button>
 </div>
-</div>
+</section>
 
 <script>
-let pages=document.querySelectorAll(".page");
-let i=0;
-
-function next(){
-if(i < pages.length-1){
-pages[i].classList.remove("active");
-i++;
-pages[i].classList.add("active");
-}
-}
-
 function play(){
 document.getElementById("music").play();
 }
 
-/* LIGHT hearts (no lag) */
-for(let j=0;j<10;j++){
+/* smooth hearts */
+for(let i=0;i<8;i++){
 let h=document.createElement("div");
 h.innerHTML="❤️";
 h.className="heart";
 h.style.left=Math.random()*100+"%";
-h.style.animationDuration=(Math.random()*3+4)+"s";
+h.style.animationDuration=(Math.random()*5+5)+"s";
 document.body.appendChild(h);
 }
 </script>
