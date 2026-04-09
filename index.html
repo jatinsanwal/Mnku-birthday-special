@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mnku ❤️</title>
+<title>For Mnku ❤️</title>
 
 <style>
 *{
@@ -13,231 +14,190 @@ font-family:sans-serif;
 }
 
 body{
-overflow-x:hidden;
-scroll-behavior:smooth;
+overflow:hidden;
 }
 
-.section{
+/* COMMON PAGE */
+.page{
 width:100%;
 height:100vh;
-position:relative;
-display:flex;
+position:absolute;
+top:0;
+left:0;
+display:none;
 justify-content:center;
 align-items:center;
+flex-direction:column;
 text-align:center;
 color:white;
+padding:20px;
 }
 
+.active{
+display:flex;
+}
+
+/* BACKGROUND */
 .bg{
 position:absolute;
 width:100%;
 height:100%;
-top:0;
-left:0;
 background-size:cover;
 background-position:center;
 z-index:-1;
 }
 
-.overlay{
-position:absolute;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-top:0;
-left:0;
-}
-
-.content{
-padding:20px;
-max-width:90%;
-}
-
+/* TEXT */
 h1{
-font-size:34px;
-margin-bottom:15px;
+font-size:8vw;
+margin-bottom:20px;
 }
 
 p{
-font-size:20px;
-line-height:1.6;
+font-size:5vw;
+max-width:90%;
 }
 
+/* BUTTON */
 .btn{
-margin-top:20px;
+margin-top:25px;
 padding:12px 25px;
 border:none;
 border-radius:25px;
 background:#ff6b81;
 color:white;
-font-size:16px;
+font-size:4vw;
 }
 
-/* FULL SCREEN IMAGE FIX */
-img, video{
+/* IMAGE FULL SCREEN */
+.full-img{
 width:100%;
-max-height:80vh;
+height:100vh;
 object-fit:cover;
 border-radius:15px;
-margin:10px 0;
 }
 
-/* LIGHT HEARTS (NO LAG) */
+/* HEARTS */
 .heart{
-position:fixed;
+position:absolute;
 color:red;
-font-size:14px;
 animation:fall linear infinite;
-opacity:0.6;
 }
 
 @keyframes fall{
-0%{transform:translateY(-10vh);}
-100%{transform:translateY(110vh);}
+0%{transform:translateY(-100px);}
+100%{transform:translateY(100vh);}
 }
 </style>
 </head>
 
 <body>
 
-<audio id="music" src="music.mp3" loop></audio>
-
 <!-- PAGE 1 -->
-<section class="section">
-<div class="bg" style="background-image:url(bg1.jpg)"></div>
-<div class="overlay"></div>
-<div class="content">
+<div class="page active">
+<div class="bg" style="background-image:url('bg1.jpg')"></div>
+
 <h1>Mnku ji... ❤️</h1>
-<p>tumhare liye kuch special banaya hai 😊</p>
-<button class="btn" onclick="play()">🎵 Music</button>
+<p id="typing"></p>
+
+<button class="btn" onclick="nextPage()">Enter 👀</button>
+<button class="btn" onclick="playMusic()">🎵 Music</button>
 </div>
-</section>
 
 <!-- PAGE 2 -->
-<section class="section">
-<div class="bg" style="background-image:url(bg2.jpg)"></div>
-<div class="overlay"></div>
-<div class="content">
-<p>
-Aaj ka din normal nahi hai... ❤️<br><br>
-kyunki aaj sabse special insaan ka birthday hai 🥺❤️<br><br>
-aur main chahta hu ye din thoda alag ho...
-</p>
-</div>
-</section>
+<div class="page">
+<div class="bg" style="background-image:url('bg2.jpg')"></div>
 
-<!-- PAGE 3 -->
-<section class="section">
-<div class="bg" style="background-image:url(bg3.jpg)"></div>
-<div class="overlay"></div>
-<div class="content">
-<h1>Bas tum ❤️</h1>
-<img src="her1.jpg">
-<img src="her2.jpg">
+<p id="typing2"></p>
+<button class="btn" onclick="nextPage()">Next</button>
 </div>
-</section>
+
+<!-- PAGE 3 (PHOTOS) -->
+<div class="page">
+<img src="img1.jpg" class="full-img">
+<button class="btn" onclick="nextPage()">Next</button>
+</div>
 
 <!-- PAGE 4 -->
-<section class="section">
-<div class="bg" style="background-image:url(bg4.jpg)"></div>
-<div class="overlay"></div>
-<div class="content">
-<img src="her3.jpg">
-<img src="her4.jpg">
+<div class="page">
+<img src="img2.jpg" class="full-img">
+<button class="btn" onclick="nextPage()">Next</button>
 </div>
-</section>
 
-<!-- PAGE 5 -->
-<section class="section">
-<div class="bg" style="background-image:url(bg5.jpg)"></div>
-<div class="overlay"></div>
-<div class="content">
-<h1>Moments 🎥</h1>
-<video src="v1.mp4" controls></video>
-</div>
-</section>
+<!-- PAGE 5 (VIDEO + SKIP) -->
+<div class="page">
+<video id="video" width="100%" height="100%" autoplay>
+<source src="video.mp4" type="video/mp4">
+</video>
 
-<!-- PAGE 6 -->
-<section class="section">
-<div class="bg" style="background-image:url(bg6.jpg)"></div>
-<div class="overlay"></div>
-<div class="content">
-<video src="v2.mp4" controls></video>
+<button class="btn" onclick="nextPage()">Skip ➡️</button>
 </div>
-</section>
 
-<!-- PAGE 7 -->
-<section class="section">
-<div class="bg" style="background-image:url(bg7.jpg)"></div>
-<div class="overlay"></div>
-<div class="content">
-<p>
-Kabhi kabhi tumhari yaad aati hai... 🥺<br><br>
-aur bas ek hi feeling hoti hai... ❤️
-</p>
-</div>
-</section>
+<!-- PAGE 6 FINAL -->
+<div class="page">
+<div class="bg" style="background-image:url('bg3.jpg')"></div>
 
-<!-- PAGE 8 -->
-<section class="section">
-<div class="bg" style="background-image:url(bg8.jpg)"></div>
-<div class="overlay"></div>
-<div class="content">
-<h1>Happy Birthday 🎂</h1>
-<p>Stay happy always ❤️</p>
+<h1>Happy Birthday ❤️</h1>
+<p>Tu mere liye bohot special hai 😘</p>
 </div>
-</section>
 
-<!-- PAGE 9 -->
-<section class="section">
-<div class="bg" style="background-image:url(bg9.jpg)"></div>
-<div class="overlay"></div>
-<div class="content">
-<video src="cake.mp4" controls></video>
-</div>
-</section>
-
-<!-- PAGE 10 -->
-<section class="section">
-<div class="bg" style="background-image:url(bg10.jpg)"></div>
-<div class="overlay"></div>
-<div class="content">
-<p>Tum meri life ka best part ho ❤️</p>
-</div>
-</section>
-
-<!-- PAGE 11 -->
-<section class="section">
-<div class="bg" style="background-image:url(bg11.jpg)"></div>
-<div class="overlay"></div>
-<div class="content">
-<p>Main tumhe bohot pasand karta hu ❤️</p>
-</div>
-</section>
-
-<!-- PAGE 12 -->
-<section class="section">
-<div class="bg" style="background-image:url(bg12.jpg)"></div>
-<div class="overlay"></div>
-<div class="content">
-<h1>I LOVE YOU ❤️</h1>
-</div>
-</section>
+<!-- MUSIC -->
+<audio id="music" src="music.mp3"></audio>
 
 <script>
-function play(){
-document.getElementById("music").play();
+let pages=document.querySelectorAll(".page");
+let current=0;
+
+function nextPage(){
+pages[current].classList.remove("active");
+current++;
+if(current<pages.length){
+pages[current].classList.add("active");
+}
 }
 
-/* smooth hearts */
-for(let i=0;i<8;i++){
-let h=document.createElement("div");
-h.innerHTML="❤️";
-h.className="heart";
-h.style.left=Math.random()*100+"%";
-h.style.animationDuration=(Math.random()*5+5)+"s";
-document.body.appendChild(h);
+/* MUSIC */
+function playMusic(){
+let music=document.getElementById("music");
+music.play();
 }
+
+/* TYPING EFFECT */
+let text1="tumhare liye kuch bohot special banaya hai... aaj bas aaram se dekhna 😊";
+let i=0;
+
+function type1(){
+if(i<text1.length){
+document.getElementById("typing").innerHTML+=text1.charAt(i);
+i++;
+setTimeout(type1,40);
+}
+}
+type1();
+
+let text2="Aaj ka din normal nahi hai... kyunki aaj duniya ki sabse pyari ladki ka birthday hai ❤️";
+let j=0;
+
+function type2(){
+if(j<text2.length){
+document.getElementById("typing2").innerHTML+=text2.charAt(j);
+j++;
+setTimeout(type2,40);
+}
+}
+setTimeout(type2,1500);
+
+/* HEARTS */
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"%";
+heart.style.animationDuration=(Math.random()*3+2)+"s";
+document.body.appendChild(heart);
+
+setTimeout(()=>{heart.remove();},5000);
+},300);
 </script>
 
 </body>
