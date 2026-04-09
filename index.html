@@ -1,69 +1,70 @@
- <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mnku ji ❤️</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:sans-serif;overflow:hidden;background:black;}
+body{margin:0;overflow:hidden;font-family:sans-serif;background:black;}
 
 .page{
 position:absolute;
 width:100%;
 height:100vh;
-background-size:cover;
-background-position:center;
 display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
+background-size:cover;
+background-position:center;
 opacity:0;
-transition:1s;
+transition:0.6s;
 }
 
-.page.active{opacity:1;z-index:10;}
+.page.active{opacity:1;}
 
-.content{
+.text{
+color:white;
+font-size:1.5em;
 text-align:center;
-color:white;
-text-shadow:0 0 10px black;
 padding:20px;
-}
-
-.title{font-size:2.5em;margin-bottom:20px;color:#ff4da6;}
-
-.line{font-size:1.4em;margin:10px 0;}
-
-.btn{
-background:#ff4da6;
-border:none;
-padding:12px 25px;
-border-radius:30px;
-color:white;
-font-size:1.2em;
-margin-top:20px;
+text-shadow:0 0 10px black;
 }
 
 img,video{
-width:90%;
-max-width:300px;
-border-radius:15px;
-margin:10px;
+width:100%;
+height:100%;
+object-fit:cover;
 }
 
-.grid{
+.btns{
+position:fixed;
+bottom:20px;
+width:100%;
 display:flex;
-flex-wrap:wrap;
-justify-content:center;
+justify-content:space-between;
+padding:0 20px;
 }
 
-.hearts{position:fixed;width:100%;height:100%;pointer-events:none;}
+button{
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:#ff4da6;
+color:white;
+font-size:1em;
+}
+
+.hearts{
+position:fixed;
+width:100%;
+height:100%;
+pointer-events:none;
+}
+
 .heart{
 position:absolute;
-font-size:20px;
-animation:fall linear forwards;
+animation:fall linear;
 }
 @keyframes fall{
 0%{transform:translateY(-100vh);}
@@ -79,143 +80,68 @@ animation:fall linear forwards;
 
 <!-- PAGES -->
 
-<div class="page active" style="background-image:url(bg1.jpg)">
-<div class="content">
-<div class="title">Mnku ji ❤️</div>
-<div class="line" id="l1"></div>
-<div class="line" id="l2"></div>
-<button class="btn" onclick="start()">Start</button>
-</div>
+<div class="page active" style="background:url(bg1.jpg)">
+<div class="text" id="t1"></div>
 </div>
 
-<div class="page" style="background-image:url(bg2.jpg)">
-<div class="content">
-<div class="line" id="p2l1"></div>
-<div class="line" id="p2l2"></div>
-<div class="line" id="p2l3"></div>
-</div>
-</div>
+<div class="page"><img src="her1.jpg"></div>
+<div class="page"><img src="her2.jpg"></div>
+<div class="page"><img src="her3.jpg"></div>
+<div class="page"><img src="her4.jpg"></div>
+<div class="page"><img src="her5.jpg"></div>
+<div class="page"><img src="her6.jpg"></div>
+<div class="page"><img src="her7.jpg"></div>
+<div class="page"><img src="her8.jpg"></div>
 
-<div class="page" style="background-image:url(bg3.jpg)">
-<div class="content">
-<div class="line" id="p3l1"></div>
-<div class="line" id="p3l2"></div>
-<div class="line" id="p3l3"></div>
-</div>
-</div>
+<div class="page"><img src="us1.jpg"></div>
+<div class="page"><img src="us2.jpg"></div>
+<div class="page"><img src="us3.jpg"></div>
+<div class="page"><img src="us4.jpg"></div>
+<div class="page"><img src="us5.jpg"></div>
 
-<div class="page" style="background-image:url(bg4.jpg)">
-<div class="content">
-<div class="line" id="p4l1"></div>
-<div class="line" id="p4l2"></div>
-<div class="line" id="p4l3"></div>
-</div>
-</div>
+<div class="page"><video src="v1.mp4" autoplay muted loop></video></div>
+<div class="page"><video src="v2.mp4" autoplay muted loop></video></div>
 
-<div class="page" style="background-image:url(bg5.jpg)">
-<div class="content">
-<div class="line" id="p5l1"></div>
-<div class="line" id="p5l2"></div>
-<div class="grid">
-<img src="her1.jpg"><img src="her2.jpg"><img src="her3.jpg">
-</div>
-</div>
-</div>
+<div class="page"><video src="usv1.mp4" autoplay muted loop></video></div>
+<div class="page"><video src="usv2.mp4" autoplay muted loop></video></div>
 
-<div class="page" style="background-image:url(bg6.jpg)">
-<div class="content">
-<div class="line" id="p6l1"></div>
-<div class="line" id="p6l2"></div>
-<div class="grid">
-<img src="her4.jpg"><img src="her5.jpg"><img src="her6.jpg">
-</div>
-</div>
-</div>
+<div class="page"><video src="msg.mp4" autoplay muted loop></video></div>
 
-<div class="page" style="background-image:url(bg7.jpg)">
-<div class="content">
-<div class="line" id="p7l1"></div>
-<div class="line" id="p7l2"></div>
-<div class="grid">
-<img src="her7.jpg"><img src="her8.jpg">
-</div>
-</div>
-</div>
-
-<div class="page" style="background-image:url(bg8.jpg)">
-<div class="content">
-<div class="line" id="p8l1"></div>
-<div class="line" id="p8l2"></div>
-<div class="grid">
-<img src="us1.jpg"><img src="us2.jpg">
-</div>
-</div>
-</div>
-
-<div class="page" style="background-image:url(bg9.jpg)">
-<div class="content">
-<div class="line" id="p9l1"></div>
-<div class="line" id="p9l2"></div>
-<div class="grid">
-<img src="us3.jpg"><img src="us4.jpg"><img src="us5.jpg">
-</div>
-</div>
-</div>
-
-<div class="page" style="background-image:url(bg10.jpg)">
-<div class="content">
-<div class="line" id="p10l1"></div>
-<div class="line" id="p10l2"></div>
-<video src="v1.mp4" autoplay muted loop></video>
-<video src="v2.mp4" autoplay muted loop></video>
-</div>
-</div>
-
-<div class="page" style="background-image:url(bg11.jpg)">
-<div class="content">
-<div class="line" id="p11l1"></div>
-<div class="line" id="p11l2"></div>
-<video src="usv1.mp4" autoplay muted loop></video>
-<video src="usv2.mp4" autoplay muted loop></video>
-<video src="msg.mp4" autoplay muted loop></video>
-</div>
-</div>
-
-<div class="page" style="background-image:url(bg12.jpg)">
-<div class="content">
+<div class="page">
 <video src="cake.mp4" autoplay muted loop></video>
-<div class="title">Happy Birthday Mnku ji ❤️</div>
-<div class="line" id="p12l1"></div>
-<div class="line" id="p12l2"></div>
+<div class="text" id="last"></div>
 </div>
+
+<!-- BUTTONS -->
+<div class="btns">
+<button onclick="prev()">⬅ Prev</button>
+<button onclick="next()">Next ➡</button>
 </div>
 
 <script>
 
 let pages=document.querySelectorAll(".page");
-let current=0;
+let i=0;
 
-function show(i){
-pages[current].classList.remove("active");
-current=i;
-pages[current].classList.add("active");
-}
-
-function start(){
-document.getElementById("music").play();
-next();
+function show(n){
+pages[i].classList.remove("active");
+i=n;
+pages[i].classList.add("active");
 }
 
 function next(){
-if(current<pages.length-1){
-show(current+1);
-runText(current);
+if(i<pages.length-1){
+show(i+1);
 }
 }
 
-setInterval(()=>{ if(current>0) next(); },6000);
+function prev(){
+if(i>0){
+show(i-1);
+}
+}
 
-// TYPEWRITER
+// TYPE TEXT
 function type(id,text){
 let el=document.getElementById(id);
 let i=0;
@@ -226,60 +152,18 @@ if(i>=text.length) clearInterval(int);
 },40);
 }
 
-// TEXT FLOW
-function runText(p){
-if(p==1){
-type("p2l1","Aaj ka din normal nahi hai...");
-type("p2l2","kyunki aaj ek bohot special insaan ka birthday hai...");
-type("p2l3","jo mere liye sabse important hai...");
-}
-if(p==2){
-type("p3l1","aaj duniya ki sabse pyaari ladki ka birthday hai ❤️");
-type("p3l2","jo sabko khush rakhti hai...");
-type("p3l3","aur khud itni pyari smile karti hai...");
-}
-if(p==3){
-type("p4l1","main bas ye chahta hu...");
-type("p4l2","ki aaj ka din unke liye perfect ho...");
-type("p4l3","aur wo hamesha smile kare...");
-}
-if(p==4){
-type("p5l1","unki ye smile...");
-type("p5l2","sach me sabse alag hai...");
-}
-if(p==5){
-type("p6l1","jab bhi unhe dekhta hu...");
-type("p6l2","dil khush ho jata hai...");
-}
-if(p==6){
-type("p7l1","aap bohot special ho...");
-type("p7l2","aur hamesha rahoge...");
-}
-if(p==7){
-type("p8l1","ye moments...");
-type("p8l2","mere liye sabse precious hai...");
-}
-if(p==8){
-type("p9l1","main bas ye chahta hu...");
-type("p9l2","ye moments kabhi khatam na ho...");
-}
-if(p==9){
-type("p10l1","ye choti choti yaadein...");
-type("p10l2","mere liye sab kuch hai...");
-}
-if(p==10){
-type("p11l1","aur ye special message...");
-type("p11l2","sirf aapke liye hai...");
-}
-if(p==11){
-type("p12l1","aap mere liye bohot special ho...");
-type("p12l2","I love you ❤️");
-}
-}
+// START TEXT
+type("t1","Mnku ji ❤️\n\nAaj ka din normal nahi hai...\nkyunki aaj duniya ki sabse pyaari ladki ka birthday hai...\n\nAur main bas itna kehna chahta hu...\naap mere liye bohot special ho ❤️");
 
-// PAGE 1 TEXT
-type("l1","aaj ka din mere liye bohot special hai...");
-type("l2","maine aapke liye kuch banaya hai...");
+// LAST PAGE TEXT
+setTimeout(()=>{
+type("last","Happy Birthday Mnku ji ❤️\n\nI love you ❤️\n\nAap hamesha aise hi smile karti raho...");
+},1000);
+
+// MUSIC AUTO
+setTimeout(()=>{
+document.getElementById("music").play();
+},1000);
 
 // HEARTS
 setInterval(()=>{
@@ -295,4 +179,4 @@ setTimeout(()=>h.remove(),5000);
 </script>
 
 </body>
-</html>        
+</html>
