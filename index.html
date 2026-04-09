@@ -1,100 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mnku ❤️</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
-body,html{overflow:hidden;}
+body,html{
+margin:0;
+padding:0;
+overflow:hidden;
+font-family:sans-serif;
+}
 
 .page{
-  width:100vw;
-  height:100vh;
-  position:absolute;
-  top:0;
-  left:0;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  text-align:center;
-  color:white;
-  padding:20px;
-  background-size:cover;
-  background-position:center;
+position:absolute;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+color:white;
+padding:20px;
+background-size:cover;
+background-position:center;
 }
 
 .active{display:flex;}
 
 .overlay{
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.5);
-  top:0;left:0;
-  z-index:0;
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.55);
+top:0;
+left:0;
 }
 
-.content{z-index:1;}
+.content{
+z-index:2;
+max-width:90%;
+}
 
-h1{font-size:28px;margin-bottom:15px;}
-p{font-size:18px;margin-bottom:20px;}
+h1{
+font-size:32px;
+margin-bottom:15px;
+}
+
+p{
+font-size:20px;
+line-height:1.5;
+}
 
 .btn{
-  padding:12px 25px;
-  border:none;
-  border-radius:25px;
-  background:#ff6b81;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
+margin-top:20px;
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:#ff6b81;
+color:white;
+font-size:16px;
 }
 
 img,video{
-  width:90%;
-  max-width:350px;
-  border-radius:15px;
-  margin:10px 0;
+width:95%;
+max-width:400px;
+border-radius:15px;
+margin:10px 0;
 }
 
-.hearts{
-  position:absolute;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  z-index:0;
+/* hearts optimized */
+.heart{
+position:absolute;
+color:red;
+font-size:16px;
+animation:fall 6s linear infinite;
+opacity:0.7;
 }
 
-.hearts span{
-  position:absolute;
-  color:red;
-  animation:float 6s linear infinite;
-  font-size:20px;
+@keyframes fall{
+0%{transform:translateY(-10%);}
+100%{transform:translateY(110vh);}
 }
 
-@keyframes float{
-  0%{transform:translateY(100vh);}
-  100%{transform:translateY(-10vh);}
-}
-
-/* typing effect */
-.typing{
-  border-right:2px solid white;
-  white-space:nowrap;
-  overflow:hidden;
-  animation:typing 3s steps(30), blink .5s infinite alternate;
-}
-
-@keyframes typing{
-  from{width:0}
-  to{width:100%}
-}
-@keyframes blink{
-  from{border-color:transparent}
-  to{border-color:white}
-}
 </style>
 </head>
 
@@ -105,67 +94,61 @@ img,video{
 <!-- PAGE 1 -->
 <div class="page active" style="background:url(bg1.jpg)">
 <div class="overlay"></div>
-<div class="hearts"></div>
 <div class="content">
 <h1>Mnku ji... ❤️</h1>
-<p>tumhare liye kuch special hai 😊</p>
-<button class="btn" onclick="nextPage()">Enter 👀</button>
-<button class="btn" onclick="playMusic()">🎵 Music</button>
+<p>tumhare liye kuch bohot special banaya hai...  
+aaj bas aaram se dekhna 😊</p>
+<button class="btn" onclick="next()">Enter 👀</button>
+<button class="btn" onclick="play()">🎵 Music</button>
 </div>
 </div>
 
 <!-- PAGE 2 -->
 <div class="page" style="background:url(bg2.jpg)">
 <div class="overlay"></div>
-<div class="hearts"></div>
 <div class="content">
-<p class="typing">Aaj ka din normal nahi hai... ❤️</p>
-<button class="btn" onclick="nextPage()">Next</button>
+<p>
+Aaj ka din normal nahi hai... ❤️<br><br>
+kyunki aaj duniya ki sabse pyari ladki ka birthday hai 🥺❤️<br><br>
+aur mujhe ye din thoda sa special banana tha...
+</p>
+<button class="btn" onclick="next()">Next</button>
 </div>
 </div>
 
-<!-- PAGE 3 HER -->
+<!-- PAGE 3 -->
 <div class="page" style="background:url(bg3.jpg)">
 <div class="overlay"></div>
 <div class="content">
-<h1>You're beautiful 😍</h1>
+<h1>Sabse pyari tum 😍</h1>
 <img src="her1.jpg">
 <img src="her2.jpg">
 <img src="her3.jpg">
 <img src="her4.jpg">
-<img src="her5.jpg">
-<img src="her6.jpg">
-<img src="her7.jpg">
-<img src="her8.jpg">
-<button class="btn" onclick="nextPage()">Next</button>
+<button class="btn" onclick="next()">Next</button>
 </div>
 </div>
 
-<!-- PAGE 4 US -->
+<!-- PAGE 4 -->
 <div class="page" style="background:url(bg4.jpg)">
 <div class="overlay"></div>
 <div class="content">
-<h1>Our memories ❤️</h1>
+<h1>Hamari memories ❤️</h1>
 <img src="us1.jpg">
 <img src="us2.jpg">
 <img src="us3.jpg">
-<img src="us4.jpg">
-<img src="us5.jpg">
-<button class="btn" onclick="nextPage()">Next</button>
+<button class="btn" onclick="next()">Next</button>
 </div>
 </div>
 
-<!-- PAGE 5 VIDEOS -->
+<!-- PAGE 5 -->
 <div class="page" style="background:url(bg5.jpg)">
 <div class="overlay"></div>
 <div class="content">
-<h1>Our moments 🎥</h1>
-<video src="v1.mp4" controls autoplay></video>
+<h1>Moments 🎥</h1>
+<video src="v1.mp4" controls></video>
 <video src="v2.mp4" controls></video>
-<video src="v3.mp4" controls></video>
-<video src="v4.mp4" controls></video>
-<video src="v5.mp4" controls></video>
-<button class="btn" onclick="nextPage()">Next</button>
+<button class="btn" onclick="next()">Next</button>
 </div>
 </div>
 
@@ -173,8 +156,12 @@ img,video{
 <div class="page" style="background:url(bg6.jpg)">
 <div class="overlay"></div>
 <div class="content">
-<p class="typing">Kabhi kabhi tumhari yaad aati hai 🥺</p>
-<button class="btn" onclick="nextPage()">Next</button>
+<p>
+Kabhi kabhi tumhari yaad aati hai... 🥺<br><br>
+aur tab bas ek hi wish hoti hai...<br>
+kaash tum paas hoti ❤️
+</p>
+<button class="btn" onclick="next()">Next</button>
 </div>
 </div>
 
@@ -182,8 +169,11 @@ img,video{
 <div class="page" style="background:url(bg7.jpg)">
 <div class="overlay"></div>
 <div class="content">
-<p>Door hoke bhi... tum mere paas ho ❤️</p>
-<button class="btn" onclick="nextPage()">Next</button>
+<p>
+Door hoke bhi tum meri life ka sabse important part ho ❤️<br><br>
+aur rahogi...
+</p>
+<button class="btn" onclick="next()">Next</button>
 </div>
 </div>
 
@@ -192,24 +182,22 @@ img,video{
 <div class="overlay"></div>
 <div class="content">
 <h1>Happy Birthday 🎂</h1>
-<p>Ye din tumhara hai ❤️</p>
-<button class="btn" onclick="nextPage()">Next</button>
+<p>
+Aaj ka din sirf tumhara hai ❤️<br>
+aur tum deserve karti ho sab kuch best
+</p>
+<button class="btn" onclick="next()">Next</button>
 </div>
 </div>
 
-<!-- PAGE 9 (GIFT CLICK) -->
+<!-- PAGE 9 -->
 <div class="page" style="background:url(bg9.jpg)">
 <div class="overlay"></div>
 <div class="content">
-<h1>Click for surprise 🎁</h1>
-<button class="btn" onclick="showVideos()">Open</button>
-
-<div id="gift" style="display:none">
-<video src="cake.mp4" controls autoplay></video>
+<h1>Surprise 🎁</h1>
+<video src="cake.mp4" controls></video>
 <video src="msg.mp4" controls></video>
-</div>
-
-<button class="btn" onclick="nextPage()">Next</button>
+<button class="btn" onclick="next()">Next</button>
 </div>
 </div>
 
@@ -217,8 +205,11 @@ img,video{
 <div class="page" style="background:url(bg10.jpg)">
 <div class="overlay"></div>
 <div class="content">
-<p>You are my everything ❤️</p>
-<button class="btn" onclick="nextPage()">Next</button>
+<p>
+Tum meri life ka sabse beautiful part ho ❤️<br><br>
+aur main seriously lucky hu ki tum meri life me ho
+</p>
+<button class="btn" onclick="next()">Next</button>
 </div>
 </div>
 
@@ -226,8 +217,11 @@ img,video{
 <div class="page" style="background:url(bg11.jpg)">
 <div class="overlay"></div>
 <div class="content">
-<p>I really love you ❤️</p>
-<button class="btn" onclick="nextPage()">Next</button>
+<p>
+Main tumhe bahut zyada pasand karta hu... ❤️<br><br>
+aur shayad jitna bolta hu usse bhi zyada
+</p>
+<button class="btn" onclick="next()">Next</button>
 </div>
 </div>
 
@@ -241,33 +235,30 @@ img,video{
 </div>
 
 <script>
-let pages = document.querySelectorAll(".page");
-let index = 0;
+let pages=document.querySelectorAll(".page");
+let i=0;
 
-function nextPage(){
-  pages[index].classList.remove("active");
-  index++;
-  pages[index].classList.add("active");
+function next(){
+if(i < pages.length-1){
+pages[i].classList.remove("active");
+i++;
+pages[i].classList.add("active");
+}
 }
 
-function playMusic(){
-  document.getElementById("music").play();
+function play(){
+document.getElementById("music").play();
 }
 
-function showVideos(){
-  document.getElementById("gift").style.display="block";
+/* LIGHT hearts (no lag) */
+for(let j=0;j<10;j++){
+let h=document.createElement("div");
+h.innerHTML="❤️";
+h.className="heart";
+h.style.left=Math.random()*100+"%";
+h.style.animationDuration=(Math.random()*3+4)+"s";
+document.body.appendChild(h);
 }
-
-// hearts generate
-document.querySelectorAll('.hearts').forEach(container=>{
-  for(let i=0;i<20;i++){
-    let span=document.createElement("span");
-    span.innerHTML="❤️";
-    span.style.left=Math.random()*100+"%";
-    span.style.animationDuration=(Math.random()*3+3)+"s";
-    container.appendChild(span);
-  }
-});
 </script>
 
 </body>
