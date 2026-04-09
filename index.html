@@ -7,145 +7,186 @@
 <style>
 body {
   margin:0;
-  font-family:Arial;
-  background:linear-gradient(black,pink);
+  font-family: 'Segoe UI', sans-serif;
+  overflow:hidden;
+  background:black;
   color:white;
-  text-align:center;
 }
 
+/* Pages */
 .page {
   display:none;
   height:100vh;
+  width:100%;
+  position:absolute;
   justify-content:center;
   align-items:center;
   flex-direction:column;
+  text-align:center;
   padding:20px;
+  transition:1s;
 }
 
 .active { display:flex; }
 
+/* Button */
 button {
-  padding:12px 20px;
+  padding:12px 25px;
   border:none;
   border-radius:25px;
-  background:pink;
-  font-size:16px;
+  background:#ff9eb5;
+  color:black;
   margin-top:20px;
+  font-size:16px;
 }
 
-img, video {
-  max-width:250px;
+/* Images */
+img {
+  max-width:260px;
   border-radius:15px;
   margin:10px;
 }
 
+/* Videos */
+video {
+  max-width:280px;
+  border-radius:15px;
+  margin:10px;
+}
+
+/* Backgrounds */
+#p1 { background:linear-gradient(black,pink); }
+#p2 { background:linear-gradient(#2c003e,#ff9eb5); }
+#p3 { background:linear-gradient(#000,#ff4d6d); }
+#p4 { background:linear-gradient(#1a1a1a,#ffb3c6); }
+#p5 { background:linear-gradient(#000,#ff758f); }
+#p6 { background:linear-gradient(#000,#ffccd5); }
+#p7 { background:linear-gradient(#000,#ff99ac); }
+#p8 { background:linear-gradient(#000,#ff4d6d); }
+#p9 { background:black; }
+#p10 { background:linear-gradient(#000,#ffccd5); }
+#p11 { background:linear-gradient(#000,#ff8fa3); }
+#p12 { background:linear-gradient(#000,#ff4d6d); }
+
+/* Typing */
+.typing {
+  border-right:3px solid white;
+  white-space:nowrap;
+  overflow:hidden;
+  animation: typing 3s steps(30), blink .5s infinite;
+}
+
+@keyframes typing { from {width:0} to {width:100%} }
+@keyframes blink { 50% {border-color:transparent} }
+
+/* Hearts */
+.heart {
+  position:fixed;
+  bottom:-10px;
+  color:red;
+  animation: float 5s linear infinite;
+}
+
+@keyframes float {
+  0% { transform:translateY(0); opacity:1 }
+  100% { transform:translateY(-100vh); opacity:0 }
+}
 </style>
 </head>
 
 <body>
 
-<audio autoplay loop>
+<audio id="music" autoplay loop>
 <source src="music.mp3">
 </audio>
 
 <!-- PAGE 1 -->
 <div class="page active" id="p1">
-<h2>Mnku ji… ❤️</h2>
-<p>Tumhare liye kuch special hai…<br>Bas aaram se dekhna 😌</p>
-<button onclick="go(2)">Enter 👀</button>
+<h2 class="typing">Mnku ji… ❤️</h2>
+<p>Tumhare liye kuch special hai 😌</p>
+<button onclick="next(2)">Enter 👀</button>
 </div>
 
 <!-- PAGE 2 -->
 <div class="page" id="p2">
-<p>Aaj ka din sabke liye normal hoga…<br>Par mere liye nahi ❤️</p>
-<p>Kyuki aaj meri favourite person aayi 😌</p>
-<button onclick="go(3)">Next</button>
+<p class="typing">Aaj ka din normal nahi hai… ❤️</p>
+<button onclick="next(3)">Next</button>
 </div>
 
-<!-- PAGE 3 HER PHOTOS -->
+<!-- PAGE 3 HER -->
 <div class="page" id="p3">
 <h2>The most beautiful person 💗</h2>
 <img id="herSlide">
-<button onclick="go(4)">Next</button>
+<button onclick="next(4)">Next</button>
 </div>
 
 <!-- PAGE 4 US -->
 <div class="page" id="p4">
 <h2>Our little world ❤️</h2>
 <img id="usSlide">
-<video src="usv1.mp4" controls></video>
-<video src="usv2.mp4" controls></video>
-<button onclick="go(5)">Next</button>
+<button onclick="next(5)">Next</button>
 </div>
 
 <!-- PAGE 5 HER VIDEOS -->
 <div class="page" id="p5">
-<h2>You are just perfect 😳❤️</h2>
-<video src="v1.mp4" controls></video>
-<video src="v2.mp4" controls></video>
-<video src="v3.mp4" controls></video>
-<video src="v4.mp4" controls></video>
-<video src="v5.mp4" controls></video>
-<button onclick="go(6)">Next</button>
+<h2>You are perfect ❤️</h2>
+<video id="v"></video>
+<button onclick="next(6)">Next</button>
 </div>
 
 <!-- PAGE 6 -->
 <div class="page" id="p6">
-<p>Kabhi kabhi tumhari yaad aati hai 🥺</p>
-<button onclick="go(7)">Next</button>
+<p class="typing">Kabhi kabhi tumhari yaad aati hai 🥺</p>
+<button onclick="next(7)">Next</button>
 </div>
 
 <!-- PAGE 7 -->
 <div class="page" id="p7">
-<p>Distance ke bawajood celebration full hoga 😏❤️</p>
-<button onclick="go(8)">Next</button>
+<p class="typing">Distance ke bawajood ❤️</p>
+<button onclick="next(8)">Next</button>
 </div>
 
 <!-- PAGE 8 -->
 <div class="page" id="p8">
-<h1>HAPPY BIRTHDAY MNKU 🎂❤️</h1>
-<button onclick="go(9)">Surprise 🎁</button>
+<h1>HAPPY BIRTHDAY 🎂❤️</h1>
+<button onclick="next(9)">Surprise 🎁</button>
 </div>
 
 <!-- PAGE 9 -->
 <div class="page" id="p9">
-<button onclick="play()">Open Gift 🎁</button>
-<div id="gift" style="display:none;">
+<button onclick="gift()">Open Gift 🎁</button>
 <video id="cake" src="cake.mp4"></video>
 <video id="msg" src="msg.mp4"></video>
-<p>Ye sab tumhare liye ❤️</p>
-<button onclick="go(10)">Next</button>
-</div>
 </div>
 
 <!-- PAGE 10 -->
 <div class="page" id="p10">
-<p>Ye sirf surprise nahi… feelings hai ❤️</p>
-<button onclick="go(11)">Next</button>
+<p class="typing">Ye sirf surprise nahi… feelings hai ❤️</p>
+<button onclick="next(11)">Next</button>
 </div>
 
 <!-- PAGE 11 -->
 <div class="page" id="p11">
-<p>Future bas tumhare saath ❤️</p>
-<button onclick="go(12)">Last</button>
+<p class="typing">Future bas tumhare saath ❤️</p>
+<button onclick="next(12)">Last</button>
 </div>
 
 <!-- PAGE 12 -->
 <div class="page" id="p12">
 <h1>I LOVE YOU ❤️</h1>
-<button onclick="go(1)">Replay 🔁</button>
+<button onclick="next(1)">Replay 🔁</button>
 </div>
 
 <script>
 
-// navigation
-function go(n){
+// page nav
+function next(n){
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 document.getElementById("p"+n).classList.add("active");
 }
 
 // slideshow HER
-let her = ["her1.jpg","her2.jpg","her3.jpg","her4.jpg","her5.jpg","her6.jpg","her7.jpg","her8.jpg"];
+let her=["her1.jpg","her2.jpg","her3.jpg","her4.jpg","her5.jpg","her6.jpg","her7.jpg","her8.jpg"];
 let i=0;
 setInterval(()=>{
 document.getElementById("herSlide").src=her[i];
@@ -153,22 +194,45 @@ i=(i+1)%her.length;
 },2000);
 
 // slideshow US
-let us = ["us1.jpg","us2.jpg","us3.jpg","us4.jpg","us5.jpg"];
+let us=["us1.jpg","us2.jpg","us3.jpg","us4.jpg","us5.jpg"];
 let j=0;
 setInterval(()=>{
 document.getElementById("usSlide").src=us[j];
 j=(j+1)%us.length;
 },2500);
 
-// gift video
-function play(){
-document.getElementById("gift").style.display="block";
-let c=document.getElementById("cake");
-let m=document.getElementById("msg");
+// videos sequence
+let vids=["v1.mp4","v2.mp4","v3.mp4","v4.mp4","v5.mp4"];
+let k=0;
+let video=document.getElementById("v");
 
-c.play();
-c.onended=()=>{m.play();}
+function playSeq(){
+video.src=vids[k];
+video.play();
+video.onended=()=>{
+k++;
+if(k<vids.length) playSeq();
+};
 }
+
+// gift
+function gift(){
+let cake=document.getElementById("cake");
+let msg=document.getElementById("msg");
+cake.style.display="block";
+cake.play();
+cake.onended=()=>{msg.play();}
+}
+
+// hearts
+setInterval(()=>{
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"%";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),5000);
+},500);
 
 </script>
 
