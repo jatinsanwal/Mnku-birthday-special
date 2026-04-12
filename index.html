@@ -1,182 +1,538 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mnku ji ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mnku ji ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-body{margin:0;overflow:hidden;font-family:sans-serif;background:black;}
+        body {
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            background: #000;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: pan-y;
+        }
 
-.page{
-position:absolute;
-width:100%;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-background-size:cover;
-background-position:center;
-opacity:0;
-transition:0.6s;
-}
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1;
+        }
 
-.page.active{opacity:1;}
+        .page.active {
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 10;
+        }
 
-.text{
-color:white;
-font-size:1.5em;
-text-align:center;
-padding:20px;
-text-shadow:0 0 10px black;
-}
+        .page.prev {
+            transform: translateY(-100px);
+        }
 
-img,video{
-width:100%;
-height:100%;
-object-fit:cover;
-}
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0,0,0,0.6), rgba(20,0,40,0.8));
+            z-index: 2;
+        }
 
-.btns{
-position:fixed;
-bottom:20px;
-width:100%;
-display:flex;
-justify-content:space-between;
-padding:0 20px;
-}
+        .content {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            max-width: 90%;
+            padding: 20px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
 
-button{
-padding:12px 25px;
-border:none;
-border-radius:25px;
-background:#ff4da6;
-color:white;
-font-size:1em;
-}
+        .title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #ff6b9d;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.9);
+        }
 
-.hearts{
-position:fixed;
-width:100%;
-height:100%;
-pointer-events:none;
-}
+        .text-line {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            line-height: 1.4;
+            margin: 20px 0;
+            opacity: 0;
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.heart{
-position:absolute;
-animation:fall linear;
-}
-@keyframes fall{
-0%{transform:translateY(-100vh);}
-100%{transform:translateY(100vh);}
-}
-</style>
+        .text-line.typing {
+            border-right: 3px solid #ff6b9d;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: #ff6b9d; }
+            51%, 100% { border-color: transparent; }
+        }
+
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: photoZoom 8s infinite ease-in-out;
+        }
+
+        @keyframes photoZoom {
+            0%, 100% { transform: scale(1.02); }
+            50% { transform: scale(1.08); }
+        }
+
+        video {
+            width: 90%;
+            max-width: 800px;
+            height: 70%;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        }
+
+        .final-content {
+            padding: 40px;
+        }
+
+        .final-title {
+            font-size: clamp(3rem, 10vw, 6rem);
+            color: #ff6b9d;
+            margin-bottom: 20px;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #ff6b9d; }
+            to { text-shadow: 0 0 40px #ff6b9d, 0 0 60px #ff6b9d; }
+        }
+
+        .nav {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,107,157,0.5);
+            color: #ff6b9d;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,107,157,0.3);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255,107,157,0.4);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .music-toggle {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid #ff6b9d;
+            border-radius: 50%;
+            color: #ff6b9d;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .music-toggle:hover {
+            background: rgba(255,107,157,0.3);
+            transform: scale(1.1);
+        }
+
+        .music-toggle.playing::after {
+            content: "♪";
+            animation: spin 2s linear infinite;
+        }
+
+        .music-toggle.paused::after {
+            content: "❚❚";
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff6b9d;
+            font-size: 20px;
+            pointer-events: none;
+            animation: float 6s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b9d, #ff8fb2);
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                bottom: 20px;
+                gap: 10px;
+            }
+            .nav-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            video {
+                width: 95%;
+                height: 65%;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="progress"></div>
+    
+    <div class="hearts" id="hearts"></div>
 
-<audio id="music" src="music.mp3" loop></audio>
-<div class="hearts" id="hearts"></div>
+    <!-- Page 1 -->
+    <div class="page" data-page="1" style="background-image: url('bg1.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="title">Mnku ji ❤️</div>
+            <div class="text-line" data-text="Aaj ka din normal nahi hai..."></div>
+            <div class="text-line" data-text="kyunki aaj duniya ki sabse pyaari ladki ka birthday hai..."></div>
+        </div>
+    </div>
 
-<!-- PAGES -->
+    <!-- Page 2 -->
+    <div class="page" data-page="2" style="background-image: url('bg2.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="text-line" data-text="Aapki muskurahat ne meri zindagi badal di..."></div>
+            <div class="text-line" data-text="Har pal aapke saath yaadgar hai..."></div>
+        </div>
+    </div>
 
-<div class="page active" style="background:url(bg1.jpg)">
-<div class="text" id="t1"></div>
-</div>
+    <!-- Page 3 -->
+    <div class="page" data-page="3" style="background-image: url('bg3.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="text-line" data-text="Aapki aankhon mein khwab hai..."></div>
+            <div class="text-line" data-text="jo mujhe nayi manzilein dikhati hain..."></div>
+        </div>
+    </div>
 
-<div class="page"><img src="her1.jpg"></div>
-<div class="page"><img src="her2.jpg"></div>
-<div class="page"><img src="her3.jpg"></div>
-<div class="page"><img src="her4.jpg"></div>
-<div class="page"><img src="her5.jpg"></div>
-<div class="page"><img src="her6.jpg"></div>
-<div class="page"><img src="her7.jpg"></div>
-<div class="page"><img src="her8.jpg"></div>
+    <!-- Page 4 -->
+    <div class="page" data-page="4" style="background-image: url('bg4.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="text-line" data-text="Aap mere liye khushi ka karan ho..."></div>
+            <div class="text-line" data-text="Hamesha aise hi khilti rahiye..."></div>
+        </div>
+    </div>
 
-<div class="page"><img src="us1.jpg"></div>
-<div class="page"><img src="us2.jpg"></div>
-<div class="page"><img src="us3.jpg"></div>
-<div class="page"><img src="us4.jpg"></div>
-<div class="page"><img src="us5.jpg"></div>
+    <!-- Photos Section -->
+    <div class="page" data-page="5" style="background-image: url('bg5.jpg');">
+        <div class="overlay"></div>
+        <img src="her1.jpg" class="photo" alt="Mnku ji">
+    </div>
 
-<div class="page"><video src="v1.mp4" autoplay muted loop></video></div>
-<div class="page"><video src="v2.mp4" autoplay muted loop></video></div>
+    <div class="page" data-page="6" style="background-image: url('bg6.jpg');">
+        <div class="overlay"></div>
+        <img src="her2.jpg" class="photo" alt="Mnku ji">
+    </div>
 
-<div class="page"><video src="usv1.mp4" autoplay muted loop></video></div>
-<div class="page"><video src="usv2.mp4" autoplay muted loop></video></div>
+    <div class="page" data-page="7" style="background-image: url('bg7.jpg');">
+        <div class="overlay"></div>
+        <img src="her3.jpg" class="photo" alt="Mnku ji">
+    </div>
 
-<div class="page"><video src="msg.mp4" autoplay muted loop></video></div>
+    <div class="page" data-page="8" style="background-image: url('bg8.jpg');">
+        <div class="overlay"></div>
+        <img src="her4.jpg" class="photo" alt="Mnku ji">
+    </div>
 
-<div class="page">
-<video src="cake.mp4" autoplay muted loop></video>
-<div class="text" id="last"></div>
-</div>
+    <div class="page" data-page="9" style="background-image: url('bg9.jpg');">
+        <div class="overlay"></div>
+        <img src="us1.jpg" class="photo" alt="Us">
+    </div>
 
-<!-- BUTTONS -->
-<div class="btns">
-<button onclick="prev()">⬅ Prev</button>
-<button onclick="next()">Next ➡</button>
-</div>
+    <div class="page" data-page="10" style="background-image: url('bg10.jpg');">
+        <div class="overlay"></div>
+        <img src="us2.jpg" class="photo" alt="Us">
+    </div>
 
-<script>
+    <!-- Videos Section -->
+    <div class="page" data-page="11" style="background-image: url('bg11.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <video autoplay muted loop playsinline>
+                <source src="v1.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
 
-let pages=document.querySelectorAll(".page");
-let i=0;
+    <div class="page" data-page="12" style="background-image: url('bg11.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <video autoplay muted loop playsinline>
+                <source src="usv1.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
 
-function show(n){
-pages[i].classList.remove("active");
-i=n;
-pages[i].classList.add("active");
-}
+    <div class="page" data-page="13" style="background-image: url('bg12.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <video autoplay muted loop playsinline>
+                <source src="msg.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
 
-function next(){
-if(i<pages.length-1){
-show(i+1);
-}
-}
+    <!-- Final Page -->
+    <div class="page" data-page="14" style="background-image: url('bg12.jpg');">
+        <div class="overlay"></div>
+        <div class="content final-content">
+            <video autoplay muted loop playsinline style="width: 60%; height: 40%; margin-bottom: 30px;">
+                <source src="cake.mp4" type="video/mp4">
+            </video>
+            <div class="final-title">Happy Birthday Mnku ji ❤️</div>
+            <div class="text-line" data-text="I Love You ❤️" style="font-size: 3rem;"></div>
+            <div class="text-line" data-text="Aap mere liye bohot special ho..." style="font-size: 1.8rem;"></div>
+        </div>
+    </div>
 
-function prev(){
-if(i>0){
-show(i-1);
-}
-}
+    <!-- Navigation -->
+    <div class="nav">
+        <button class="nav-btn" id="prevBtn">← Prev</button>
+        <button class="nav-btn" id="nextBtn">Next →</button>
+    </div>
 
-// TYPE TEXT
-function type(id,text){
-let el=document.getElementById(id);
-let i=0;
-let int=setInterval(()=>{
-el.innerHTML+=text[i];
-i++;
-if(i>=text.length) clearInterval(int);
-},40);
-}
+    <div class="music-toggle paused" id="musicToggle"></div>
 
-// START TEXT
-type("t1","Mnku ji ❤️\n\nAaj ka din normal nahi hai...\nkyunki aaj duniya ki sabse pyaari ladki ka birthday hai...\n\nAur main bas itna kehna chahta hu...\naap mere liye bohot special ho ❤️");
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
 
-// LAST PAGE TEXT
-setTimeout(()=>{
-type("last","Happy Birthday Mnku ji ❤️\n\nI love you ❤️\n\nAap hamesha aise hi smile karti raho...");
-},1000);
+    <script>
+        class RomanticStory {
+            constructor() {
+                this.currentPage = 0;
+                this.totalPages = 14;
+                this.isTransitioning = false;
+                this.isUserInteracted = false;
+                this.touchStartY = 0;
+                this.init();
+            }
 
-// MUSIC AUTO
-setTimeout(()=>{
-document.getElementById("music").play();
-},1000);
+            init() {
+                this.pages = document.querySelectorAll('.page');
+                this.prevBtn = document.getElementById('prevBtn');
+                this.nextBtn = document.getElementById('nextBtn');
+                this.musicToggle = document.getElementById('musicToggle');
+                this.bgMusic = document.getElementById('bgMusic');
+                this.heartsContainer = document.getElementById('hearts');
+                this.progress = document.querySelector('.progress');
 
-// HEARTS
-setInterval(()=>{
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.animationDuration=(Math.random()*3+2)+"s";
-document.getElementById("hearts").appendChild(h);
-setTimeout(()=>h.remove(),5000);
-},300);
+                this.bindEvents();
+                this.showPage(1);
+                this.createHearts();
+                this.startTypewriter();
+            }
 
-</script>
+            bindEvents() {
+                // Navigation buttons
+                this.nextBtn.addEventListener('click', () => this.next());
+                this.prevBtn.addEventListener('click', () => this.prev());
 
-</body>
-</html>
+                // Keyboard
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowRight' || e.key === ' ') this.next();
+                    if (e.key === 'ArrowLeft') this.prev();
+                });
+
+                // Touch/swipe support
+                document.addEventListener('touchstart', (e) => {
+                    this.touchStartY = e.touches[0].clientY;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    if (!this.touchStartY) return;
+                    const touchEndY = e.changedTouches[0].clientY;
+                    const diff = this.touchStartY - touchEndY;
+
+                    if (Math.abs(diff) > 50) {
+                        if (diff > 0) this.next();
+                        else this.prev();
+                    }
+                    this.touchStartY = 0;
+                }, { passive: true });
+
+                // Music toggle
+                this.musicToggle.addEventListener('click', () => this.toggleMusic());
+
+                // First interaction
+                document.addEventListener('click', () => {
+                    if (!this.isUserInteracted) {
+                        this.isUserInteracted = true;
+                        this.bgMusic.play().catch(() => {});
+                    }
+                }, { once: true });
+            }
+
+            showPage(pageNum) {
+                if (this.isTransitioning) return;
+                this.isTransitioning = true;
+
+                // Hide all pages
+                this.pages.forEach((page, index) => {
+                    page.classList.remove('active', 'prev');
+                    if (index + 1 < pageNum) {
+                        page.classList.add('prev');
+                    }
+                });
+
+                // Show current page
+                const targetPage = this.pages[pageNum - 1];
+                targetPage.classList.add('active');
+                this.currentPage = pageNum;
+
+                // Update navigation
+                this.prevBtn.disabled = pageNum === 1;
+                this.nextBtn.disabled = pageNum === this.totalPages;
+                this.updateProgress();
+
+                // Reset typewriter for text pages
+                if (pageNum <= 4 || pageNum === 14) {
+                    setTimeout(() => this.startTypewriter(), 600);
+                }
+
+                // Restart videos
+                const videos = targetPage.querySelectorAll('video');
+                videos.forEach(video => {
+                    video.currentTime = 0;
+                    video.play().catch(() => {});
+                });
+
+                setTimeout(() => {
+                    this.isTransitioning = false;
+                }, 600);
+            }
+
+            next() {
+                if (this.currentPage < this.totalPages && !this.isTransitioning) {
+                    this.showPage(this.currentPage + 1);
+                }
+            }
+
+            prev() {
+                if (this.currentPage > 1 && !this.isTransitioning) {
+                    this.showPage(this.currentPage - 1);
+                }
+            }
+
+            updateProgress() {
+                const progress = (this.currentPage / this.totalPages) * 100;
+                this.progress.style.width = progress + '%';
+            }
+
+            async startTypewriter() {
+                const currentPage = this.pages[this.currentPage - 1];
+                const lines = currentPage.querySelectorAll('.text-line[data-text]');
+
+                for (let i = 0; i < lines.length; i++) {
+                    await this.typeWriter(lines[i], i * 1000);
+                }
+            }
+
+            async typeWriter(line, delay = 0) {
+                await new Promise(resolve => setTimeout(resolve, delay));
+                
+                const text = line.getAttribute('data-text');
+                line.textContent = '';
+                line.classList.add('typing');
+
+                for (let i = 0; i <= text.length; i++) {
+                    line.textContent = text.slice(0, i);
+                    await new Promise(resolve => setTimeout(resolve, 80));
+                }
+
+                line.classList
