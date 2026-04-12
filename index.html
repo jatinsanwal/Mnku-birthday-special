@@ -1,538 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mnku ji ❤️</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mnku ji ❤️</title>
 
-        body {
-            font-family: 'Georgia', serif;
-            overflow: hidden;
-            background: #000;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: pan-y;
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    font-family:sans-serif;
+    overflow:hidden;
+    background:black;
+}
 
-        .page {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transform: translateY(100px);
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 1;
-        }
+/* PAGE */
+.page{
+    position:absolute;
+    width:100%;
+    height:100vh;
+    top:0;
+    left:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    opacity:0;
+    transition:0.6s;
+}
+.page.active{opacity:1;z-index:10;}
 
-        .page.active {
-            opacity: 1;
-            transform: translateY(0);
-            z-index: 10;
-        }
+.bg{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:1;
+}
 
-        .page.prev {
-            transform: translateY(-100px);
-        }
+.overlay{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    z-index:2;
+}
 
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(0,0,0,0.6), rgba(20,0,40,0.8));
-            z-index: 2;
-        }
+.content{
+    z-index:5;
+    text-align:center;
+    color:white;
+    padding:20px;
+}
 
-        .content {
-            position: relative;
-            z-index: 5;
-            text-align: center;
-            max-width: 90%;
-            padding: 20px;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-        }
+/* TEXT */
+.title{
+    font-size:3rem;
+    color:#ff4da6;
+    margin-bottom:20px;
+}
+.text{
+    font-size:1.5rem;
+    margin:10px 0;
+}
 
-        .title {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: bold;
-            margin-bottom: 30px;
-            color: #ff6b9d;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.9);
-        }
+/* BUTTONS */
+.controls{
+    position:fixed;
+    bottom:20px;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    z-index:50;
+}
+button{
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    font-size:16px;
+    background:#ff4da6;
+    color:white;
+}
 
-        .text-line {
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            line-height: 1.4;
-            margin: 20px 0;
-            opacity: 0;
-            min-height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+/* HEARTS */
+.hearts{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    pointer-events:none;
+}
+.heart{
+    position:absolute;
+    color:#ff4da6;
+    animation:fall linear;
+}
+@keyframes fall{
+    0%{transform:translateY(-10vh);}
+    100%{transform:translateY(110vh);}
+}
 
-        .text-line.typing {
-            border-right: 3px solid #ff6b9d;
-            animation: blink 1s infinite;
-        }
+/* VIDEO */
+video{
+    width:90%;
+    border-radius:20px;
+}
 
-        @keyframes blink {
-            0%, 50% { border-color: #ff6b9d; }
-            51%, 100% { border-color: transparent; }
-        }
-
-        .photo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            animation: photoZoom 8s infinite ease-in-out;
-        }
-
-        @keyframes photoZoom {
-            0%, 100% { transform: scale(1.02); }
-            50% { transform: scale(1.08); }
-        }
-
-        video {
-            width: 90%;
-            max-width: 800px;
-            height: 70%;
-            object-fit: cover;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-        }
-
-        .final-content {
-            padding: 40px;
-        }
-
-        .final-title {
-            font-size: clamp(3rem, 10vw, 6rem);
-            color: #ff6b9d;
-            margin-bottom: 20px;
-            animation: glow 2s infinite alternate;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 20px #ff6b9d; }
-            to { text-shadow: 0 0 40px #ff6b9d, 0 0 60px #ff6b9d; }
-        }
-
-        .nav {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-btn {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,107,157,0.5);
-            color: #ff6b9d;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            user-select: none;
-        }
-
-        .nav-btn:hover {
-            background: rgba(255,107,157,0.3);
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(255,107,157,0.4);
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        .music-toggle {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border: 2px solid #ff6b9d;
-            border-radius: 50%;
-            color: #ff6b9d;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            transition: all 0.3s ease;
-        }
-
-        .music-toggle:hover {
-            background: rgba(255,107,157,0.3);
-            transform: scale(1.1);
-        }
-
-        .music-toggle.playing::after {
-            content: "♪";
-            animation: spin 2s linear infinite;
-        }
-
-        .music-toggle.paused::after {
-            content: "❚❚";
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .hearts {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 3;
-        }
-
-        .heart {
-            position: absolute;
-            color: #ff6b9d;
-            font-size: 20px;
-            pointer-events: none;
-            animation: float 6s infinite linear;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 4px;
-            background: linear-gradient(90deg, #ff6b9d, #ff8fb2);
-            z-index: 1000;
-            transition: width 0.3s ease;
-        }
-
-        @media (max-width: 768px) {
-            .nav {
-                bottom: 20px;
-                gap: 10px;
-            }
-            .nav-btn {
-                padding: 12px 20px;
-                font-size: 1rem;
-            }
-            video {
-                width: 95%;
-                height: 65%;
-            }
-        }
-    </style>
+/* FINAL */
+.big-love{
+    font-size:3.5rem;
+    color:#ff4da6;
+    animation:glow 1.5s infinite alternate;
+}
+@keyframes glow{
+    from{ text-shadow:0 0 10px #ff4da6;}
+    to{ text-shadow:0 0 30px #ff4da6;}
+}
+</style>
 </head>
+
 <body>
-    <div class="progress"></div>
-    
-    <div class="hearts" id="hearts"></div>
 
-    <!-- Page 1 -->
-    <div class="page" data-page="1" style="background-image: url('bg1.jpg');">
-        <div class="overlay"></div>
-        <div class="content">
-            <div class="title">Mnku ji ❤️</div>
-            <div class="text-line" data-text="Aaj ka din normal nahi hai..."></div>
-            <div class="text-line" data-text="kyunki aaj duniya ki sabse pyaari ladki ka birthday hai..."></div>
-        </div>
-    </div>
+<div class="hearts" id="hearts"></div>
 
-    <!-- Page 2 -->
-    <div class="page" data-page="2" style="background-image: url('bg2.jpg');">
-        <div class="overlay"></div>
-        <div class="content">
-            <div class="text-line" data-text="Aapki muskurahat ne meri zindagi badal di..."></div>
-            <div class="text-line" data-text="Har pal aapke saath yaadgar hai..."></div>
-        </div>
-    </div>
+<audio id="music" src="music.mp3" loop></audio>
 
-    <!-- Page 3 -->
-    <div class="page" data-page="3" style="background-image: url('bg3.jpg');">
-        <div class="overlay"></div>
-        <div class="content">
-            <div class="text-line" data-text="Aapki aankhon mein khwab hai..."></div>
-            <div class="text-line" data-text="jo mujhe nayi manzilein dikhati hain..."></div>
-        </div>
-    </div>
+<!-- PAGE 1 -->
+<div class="page active">
+<img src="bg1.jpg" class="bg">
+<div class="overlay"></div>
+<div class="content">
+<div class="title">Mnku ji ❤️</div>
+<div class="text">Aaj ka din normal nahi hai...</div>
+<div class="text">kyunki aaj sabse special ladki ka birthday hai ❤️</div>
+</div>
+</div>
 
-    <!-- Page 4 -->
-    <div class="page" data-page="4" style="background-image: url('bg4.jpg');">
-        <div class="overlay"></div>
-        <div class="content">
-            <div class="text-line" data-text="Aap mere liye khushi ka karan ho..."></div>
-            <div class="text-line" data-text="Hamesha aise hi khilti rahiye..."></div>
-        </div>
-    </div>
+<!-- PAGE 2 -->
+<div class="page">
+<img src="bg2.jpg" class="bg">
+<div class="overlay"></div>
+<div class="content">
+<div class="text">Aap meri life ka sabse beautiful part ho...</div>
+<div class="text">Aur main lucky hu ki aap meri life me ho ❤️</div>
+</div>
+</div>
 
-    <!-- Photos Section -->
-    <div class="page" data-page="5" style="background-image: url('bg5.jpg');">
-        <div class="overlay"></div>
-        <img src="her1.jpg" class="photo" alt="Mnku ji">
-    </div>
+<!-- PAGE 3 PHOTO -->
+<div class="page">
+<img src="her1.jpg" class="bg">
+<div class="overlay"></div>
+<div class="content">
+<div class="text">Ye smile... 😍</div>
+</div>
+</div>
 
-    <div class="page" data-page="6" style="background-image: url('bg6.jpg');">
-        <div class="overlay"></div>
-        <img src="her2.jpg" class="photo" alt="Mnku ji">
-    </div>
+<!-- PAGE 4 PHOTO -->
+<div class="page">
+<img src="her2.jpg" class="bg">
+<div class="overlay"></div>
+<div class="content">
+<div class="text">Sabse pyaari ❤️</div>
+</div>
+</div>
 
-    <div class="page" data-page="7" style="background-image: url('bg7.jpg');">
-        <div class="overlay"></div>
-        <img src="her3.jpg" class="photo" alt="Mnku ji">
-    </div>
+<!-- PAGE 5 PHOTO -->
+<div class="page">
+<img src="her3.jpg" class="bg">
+<div class="overlay"></div>
+<div class="content">
+<div class="text">Dil le jaati ho aap 💘</div>
+</div>
+</div>
 
-    <div class="page" data-page="8" style="background-image: url('bg8.jpg');">
-        <div class="overlay"></div>
-        <img src="her4.jpg" class="photo" alt="Mnku ji">
-    </div>
+<!-- PAGE 6 US -->
+<div class="page">
+<img src="us1.jpg" class="bg">
+<div class="overlay"></div>
+<div class="content">
+<div class="text">Hum dono ❤️</div>
+</div>
+</div>
 
-    <div class="page" data-page="9" style="background-image: url('bg9.jpg');">
-        <div class="overlay"></div>
-        <img src="us1.jpg" class="photo" alt="Us">
-    </div>
+<!-- PAGE 7 VIDEO -->
+<div class="page">
+<div class="overlay"></div>
+<video src="v1.mp4" autoplay loop muted></video>
+</div>
 
-    <div class="page" data-page="10" style="background-image: url('bg10.jpg');">
-        <div class="overlay"></div>
-        <img src="us2.jpg" class="photo" alt="Us">
-    </div>
+<!-- PAGE 8 VIDEO -->
+<div class="page">
+<div class="overlay"></div>
+<video src="msg.mp4" autoplay loop muted></video>
+</div>
 
-    <!-- Videos Section -->
-    <div class="page" data-page="11" style="background-image: url('bg11.jpg');">
-        <div class="overlay"></div>
-        <div class="content">
-            <video autoplay muted loop playsinline>
-                <source src="v1.mp4" type="video/mp4">
-            </video>
-        </div>
-    </div>
+<!-- PAGE 9 CAKE -->
+<div class="page">
+<div class="overlay"></div>
+<video src="cake.mp4" autoplay loop muted></video>
+<div class="content">
+<div class="text">Cut the cake 🎂</div>
+</div>
+</div>
 
-    <div class="page" data-page="12" style="background-image: url('bg11.jpg');">
-        <div class="overlay"></div>
-        <div class="content">
-            <video autoplay muted loop playsinline>
-                <source src="usv1.mp4" type="video/mp4">
-            </video>
-        </div>
-    </div>
+<!-- PAGE 10 FINAL -->
+<div class="page">
+<img src="bg12.jpg" class="bg">
+<div class="overlay"></div>
+<div class="content">
+<div class="big-love">I LOVE YOU ❤️</div>
+<div class="text">Happy Birthday Mnku ji 💖</div>
+<div class="text">Aap meri duniya ho ❤️</div>
+</div>
+</div>
 
-    <div class="page" data-page="13" style="background-image: url('bg12.jpg');">
-        <div class="overlay"></div>
-        <div class="content">
-            <video autoplay muted loop playsinline>
-                <source src="msg.mp4" type="video/mp4">
-            </video>
-        </div>
-    </div>
+<!-- CONTROLS -->
+<div class="controls">
+<button onclick="prev()">Prev</button>
+<button onclick="next()">Next</button>
+<button onclick="playMusic()">Music</button>
+</div>
 
-    <!-- Final Page -->
-    <div class="page" data-page="14" style="background-image: url('bg12.jpg');">
-        <div class="overlay"></div>
-        <div class="content final-content">
-            <video autoplay muted loop playsinline style="width: 60%; height: 40%; margin-bottom: 30px;">
-                <source src="cake.mp4" type="video/mp4">
-            </video>
-            <div class="final-title">Happy Birthday Mnku ji ❤️</div>
-            <div class="text-line" data-text="I Love You ❤️" style="font-size: 3rem;"></div>
-            <div class="text-line" data-text="Aap mere liye bohot special ho..." style="font-size: 1.8rem;"></div>
-        </div>
-    </div>
+<script>
+let pages=document.querySelectorAll(".page");
+let i=0;
 
-    <!-- Navigation -->
-    <div class="nav">
-        <button class="nav-btn" id="prevBtn">← Prev</button>
-        <button class="nav-btn" id="nextBtn">Next →</button>
-    </div>
+function show(n){
+pages.forEach(p=>p.classList.remove("active"));
+pages[n].classList.add("active");
+}
 
-    <div class="music-toggle paused" id="musicToggle"></div>
+function next(){
+if(i<pages.length-1){i++;show(i);}
+}
 
-    <audio id="bgMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
+function prev(){
+if(i>0){i--;show(i);}
+}
 
-    <script>
-        class RomanticStory {
-            constructor() {
-                this.currentPage = 0;
-                this.totalPages = 14;
-                this.isTransitioning = false;
-                this.isUserInteracted = false;
-                this.touchStartY = 0;
-                this.init();
-            }
+function playMusic(){
+document.getElementById("music").play();
+}
 
-            init() {
-                this.pages = document.querySelectorAll('.page');
-                this.prevBtn = document.getElementById('prevBtn');
-                this.nextBtn = document.getElementById('nextBtn');
-                this.musicToggle = document.getElementById('musicToggle');
-                this.bgMusic = document.getElementById('bgMusic');
-                this.heartsContainer = document.getElementById('hearts');
-                this.progress = document.querySelector('.progress');
+/* HEARTS */
+setInterval(()=>{
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=(Math.random()*3+2)+"s";
+document.getElementById("hearts").appendChild(h);
+setTimeout(()=>h.remove(),5000);
+},300);
+</script>
 
-                this.bindEvents();
-                this.showPage(1);
-                this.createHearts();
-                this.startTypewriter();
-            }
-
-            bindEvents() {
-                // Navigation buttons
-                this.nextBtn.addEventListener('click', () => this.next());
-                this.prevBtn.addEventListener('click', () => this.prev());
-
-                // Keyboard
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'ArrowRight' || e.key === ' ') this.next();
-                    if (e.key === 'ArrowLeft') this.prev();
-                });
-
-                // Touch/swipe support
-                document.addEventListener('touchstart', (e) => {
-                    this.touchStartY = e.touches[0].clientY;
-                }, { passive: true });
-
-                document.addEventListener('touchend', (e) => {
-                    if (!this.touchStartY) return;
-                    const touchEndY = e.changedTouches[0].clientY;
-                    const diff = this.touchStartY - touchEndY;
-
-                    if (Math.abs(diff) > 50) {
-                        if (diff > 0) this.next();
-                        else this.prev();
-                    }
-                    this.touchStartY = 0;
-                }, { passive: true });
-
-                // Music toggle
-                this.musicToggle.addEventListener('click', () => this.toggleMusic());
-
-                // First interaction
-                document.addEventListener('click', () => {
-                    if (!this.isUserInteracted) {
-                        this.isUserInteracted = true;
-                        this.bgMusic.play().catch(() => {});
-                    }
-                }, { once: true });
-            }
-
-            showPage(pageNum) {
-                if (this.isTransitioning) return;
-                this.isTransitioning = true;
-
-                // Hide all pages
-                this.pages.forEach((page, index) => {
-                    page.classList.remove('active', 'prev');
-                    if (index + 1 < pageNum) {
-                        page.classList.add('prev');
-                    }
-                });
-
-                // Show current page
-                const targetPage = this.pages[pageNum - 1];
-                targetPage.classList.add('active');
-                this.currentPage = pageNum;
-
-                // Update navigation
-                this.prevBtn.disabled = pageNum === 1;
-                this.nextBtn.disabled = pageNum === this.totalPages;
-                this.updateProgress();
-
-                // Reset typewriter for text pages
-                if (pageNum <= 4 || pageNum === 14) {
-                    setTimeout(() => this.startTypewriter(), 600);
-                }
-
-                // Restart videos
-                const videos = targetPage.querySelectorAll('video');
-                videos.forEach(video => {
-                    video.currentTime = 0;
-                    video.play().catch(() => {});
-                });
-
-                setTimeout(() => {
-                    this.isTransitioning = false;
-                }, 600);
-            }
-
-            next() {
-                if (this.currentPage < this.totalPages && !this.isTransitioning) {
-                    this.showPage(this.currentPage + 1);
-                }
-            }
-
-            prev() {
-                if (this.currentPage > 1 && !this.isTransitioning) {
-                    this.showPage(this.currentPage - 1);
-                }
-            }
-
-            updateProgress() {
-                const progress = (this.currentPage / this.totalPages) * 100;
-                this.progress.style.width = progress + '%';
-            }
-
-            async startTypewriter() {
-                const currentPage = this.pages[this.currentPage - 1];
-                const lines = currentPage.querySelectorAll('.text-line[data-text]');
-
-                for (let i = 0; i < lines.length; i++) {
-                    await this.typeWriter(lines[i], i * 1000);
-                }
-            }
-
-            async typeWriter(line, delay = 0) {
-                await new Promise(resolve => setTimeout(resolve, delay));
-                
-                const text = line.getAttribute('data-text');
-                line.textContent = '';
-                line.classList.add('typing');
-
-                for (let i = 0; i <= text.length; i++) {
-                    line.textContent = text.slice(0, i);
-                    await new Promise(resolve => setTimeout(resolve, 80));
-                }
-
-                line.classList
+</body>
+</html>
