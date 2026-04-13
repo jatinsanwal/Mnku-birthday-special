@@ -1,246 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mnku ji ❤️</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-    font-family:sans-serif;
-    overflow:hidden;
-    background:black;
-}
+body{margin:0;overflow:hidden;background:black;font-family:sans-serif;color:white;}
 
-/* PAGE */
 .page{
-    position:absolute;
-    width:100%;
-    height:100vh;
-    top:0;
-    left:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    opacity:0;
-    transition:0.6s;
+position:absolute;
+width:100%;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+opacity:0;
+transition:0.6s;
 }
 .page.active{opacity:1;z-index:10;}
 
-.bg{
-    position:absolute;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:1;
-}
+img{max-width:100%;max-height:100%;object-fit:contain;}
 
-.overlay{
-    position:absolute;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.4);
-    z-index:2;
-}
-
-.content{
-    z-index:5;
-    text-align:center;
-    color:white;
-    padding:20px;
-}
-
-/* TEXT */
-.title{
-    font-size:3rem;
-    color:#ff4da6;
-    margin-bottom:20px;
-}
 .text{
-    font-size:1.5rem;
-    margin:10px 0;
+font-size:1.4rem;
+text-align:center;
+padding:20px;
+line-height:1.5;
 }
 
-/* BUTTONS */
-.controls{
-    position:fixed;
-    bottom:20px;
-    width:100%;
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    z-index:50;
-}
-button{
-    padding:12px 25px;
-    border:none;
-    border-radius:30px;
-    font-size:16px;
-    background:#ff4da6;
-    color:white;
-}
-
-/* HEARTS */
-.hearts{
-    position:fixed;
-    width:100%;
-    height:100%;
-    top:0;
-    left:0;
-    pointer-events:none;
-}
-.heart{
-    position:absolute;
-    color:#ff4da6;
-    animation:fall linear;
-}
-@keyframes fall{
-    0%{transform:translateY(-10vh);}
-    100%{transform:translateY(110vh);}
-}
-
-/* VIDEO */
-video{
-    width:90%;
-    border-radius:20px;
-}
-
-/* FINAL */
-.big-love{
-    font-size:3.5rem;
-    color:#ff4da6;
-    animation:glow 1.5s infinite alternate;
+.big{
+font-size:3rem;
+color:#ff4da6;
+animation:glow 1s infinite alternate;
 }
 @keyframes glow{
-    from{ text-shadow:0 0 10px #ff4da6;}
-    to{ text-shadow:0 0 30px #ff4da6;}
+from{text-shadow:0 0 10px #ff4da6;}
+to{text-shadow:0 0 30px #ff4da6;}
+}
+
+.controls{
+position:fixed;
+bottom:20px;
+width:100%;
+display:flex;
+justify-content:center;
+gap:15px;
+z-index:50;
+}
+button{
+padding:12px 20px;
+border:none;
+border-radius:30px;
+background:#ff4da6;
+color:white;
+}
+
+.heart{
+position:fixed;
+color:#ff4da6;
+animation:fall linear;
+}
+@keyframes fall{
+0%{transform:translateY(-10vh);}
+100%{transform:translateY(110vh);}
+}
+
+.cake{font-size:4rem;animation:pop 1s infinite alternate;}
+@keyframes pop{
+from{transform:scale(1);}
+to{transform:scale(1.2);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="hearts" id="hearts"></div>
-
 <audio id="music" src="music.mp3" loop></audio>
+<div id="container"></div>
 
-<!-- PAGE 1 -->
-<div class="page active">
-<img src="bg1.jpg" class="bg">
-<div class="overlay"></div>
-<div class="content">
-<div class="title">Mnku ji ❤️</div>
-<div class="text">Aaj ka din normal nahi hai...</div>
-<div class="text">kyunki aaj sabse special ladki ka birthday hai ❤️</div>
-</div>
-</div>
-
-<!-- PAGE 2 -->
-<div class="page">
-<img src="bg2.jpg" class="bg">
-<div class="overlay"></div>
-<div class="content">
-<div class="text">Aap meri life ka sabse beautiful part ho...</div>
-<div class="text">Aur main lucky hu ki aap meri life me ho ❤️</div>
-</div>
-</div>
-
-<!-- PAGE 3 PHOTO -->
-<div class="page">
-<img src="her1.jpg" class="bg">
-<div class="overlay"></div>
-<div class="content">
-<div class="text">Ye smile... 😍</div>
-</div>
-</div>
-
-<!-- PAGE 4 PHOTO -->
-<div class="page">
-<img src="her2.jpg" class="bg">
-<div class="overlay"></div>
-<div class="content">
-<div class="text">Sabse pyaari ❤️</div>
-</div>
-</div>
-
-<!-- PAGE 5 PHOTO -->
-<div class="page">
-<img src="her3.jpg" class="bg">
-<div class="overlay"></div>
-<div class="content">
-<div class="text">Dil le jaati ho aap 💘</div>
-</div>
-</div>
-
-<!-- PAGE 6 US -->
-<div class="page">
-<img src="us1.jpg" class="bg">
-<div class="overlay"></div>
-<div class="content">
-<div class="text">Hum dono ❤️</div>
-</div>
-</div>
-
-<!-- PAGE 7 VIDEO -->
-<div class="page">
-<div class="overlay"></div>
-<video src="v1.mp4" autoplay loop muted></video>
-</div>
-
-<!-- PAGE 8 VIDEO -->
-<div class="page">
-<div class="overlay"></div>
-<video src="msg.mp4" autoplay loop muted></video>
-</div>
-
-<!-- PAGE 9 CAKE -->
-<div class="page">
-<div class="overlay"></div>
-<video src="cake.mp4" autoplay loop muted></video>
-<div class="content">
-<div class="text">Cut the cake 🎂</div>
-</div>
-</div>
-
-<!-- PAGE 10 FINAL -->
-<div class="page">
-<img src="bg12.jpg" class="bg">
-<div class="overlay"></div>
-<div class="content">
-<div class="big-love">I LOVE YOU ❤️</div>
-<div class="text">Happy Birthday Mnku ji 💖</div>
-<div class="text">Aap meri duniya ho ❤️</div>
-</div>
-</div>
-
-<!-- CONTROLS -->
 <div class="controls">
 <button onclick="prev()">Prev</button>
 <button onclick="next()">Next</button>
-<button onclick="playMusic()">Music</button>
+<button onclick="toggleMusic()">Music</button>
 </div>
 
 <script>
-let pages=document.querySelectorAll(".page");
-let i=0;
+let pages=[], i=0, music=document.getElementById("music"), playing=false;
 
+function addPage(html){
+let d=document.createElement("div");
+d.className="page";
+d.innerHTML=html;
+container.appendChild(d);
+pages.push(d);
+}
+
+/* TYPE ANIMATION */
+function type(el,text,speed=35){
+let i=0;
+el.innerHTML="";
+let int=setInterval(()=>{
+el.innerHTML+=text[i];
+i++;
+if(i>=text.length) clearInterval(int);
+},speed);
+}
+
+/* 💖 MESSAGE PAGES */
+let msgs=[
+"Mnku ji ❤️",
+"Aaj ka din normal nahi hai...",
+"Kyuki aaj duniya ki sabse pyaari ladki ka birthday hai 💖",
+"Aap meri life ka sabse beautiful part ho...",
+"Sach bolu to... aapke bina sab adhoora lagta hai...",
+"Aapki smile... meri weakness hai 😭❤️",
+"Jab bhi aap haste ho na... dil khush ho jata hai 💘",
+"Aap sirf special nahi ho...",
+"Aap meri aadat ban chuki ho ❤️",
+"Main har din bas ye chahta hu...",
+"Ki aap hamesha khush raho 💖",
+"Chahe kuch bhi ho jaye...",
+"Main hamesha aapke saath rahunga ❤️",
+"Aap meri duniya ho...",
+"Mera sab kuch ho 💘",
+"Aur aaj ka din sirf aapke naam ❤️"
+];
+
+msgs.forEach(m=>{
+addPage(`<div class="text" id="t${pages.length}"></div>`);
+setTimeout(()=>{
+let el=document.querySelectorAll(".text")[pages.length-1];
+type(el,m);
+},500);
+});
+
+/* 📸 PHOTOS */
+["her1.jpg","her2.jpg","her3.jpg","her4.jpg","her5.jpg","her6.jpg","her7.jpg","her8.jpg",
+"us1.jpg","us2.jpg","us3.jpg","us4.jpg","us5.jpg"]
+.forEach(p=>addPage(`<img src="${p}">`));
+
+/* 🎬 VIDEOS */
+addPage(`<video src="v1.mp4" autoplay loop muted style="width:100%"></video>`);
+addPage(`<video src="v2.mp4" autoplay loop muted style="width:100%"></video>`);
+
+/* 🎂 CAKE ANIMATION */
+addPage(`<div class="text"><div class="cake">🎂</div>Make a wish Mnku ji 💖</div>`);
+
+/* 🎂 CAKE VIDEO */
+addPage(`<video src="cake.mp4" autoplay loop muted style="width:100%"></video>`);
+
+/* 💌 MESSAGE VIDEO */
+addPage(`<video src="msg.mp4" autoplay loop muted style="width:100%"></video>`);
+
+/* 💘 FINAL */
+addPage(`
+<div class="text">
+<div class="big">I LOVE YOU ❤️</div>
+Happy Birthday Mnku ji 💖<br>
+Aap meri life ka sabse important part ho ❤️<br>
+Aur hamesha rahoge 💘
+</div>
+`);
+
+/* NAV */
 function show(n){
 pages.forEach(p=>p.classList.remove("active"));
 pages[n].classList.add("active");
 }
+show(0);
 
-function next(){
-if(i<pages.length-1){i++;show(i);}
-}
+function next(){ if(i<pages.length-1){i++;show(i);} }
+function prev(){ if(i>0){i--;show(i);} }
 
-function prev(){
-if(i>0){i--;show(i);}
-}
-
-function playMusic(){
-document.getElementById("music").play();
+/* MUSIC */
+function toggleMusic(){
+playing ? music.pause() : music.play();
+playing=!playing;
 }
 
 /* HEARTS */
@@ -250,7 +186,7 @@ h.className="heart";
 h.innerHTML="❤️";
 h.style.left=Math.random()*100+"vw";
 h.style.animationDuration=(Math.random()*3+2)+"s";
-document.getElementById("hearts").appendChild(h);
+document.body.appendChild(h);
 setTimeout(()=>h.remove(),5000);
 },300);
 </script>
