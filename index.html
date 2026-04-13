@@ -1,195 +1,487 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mnku ji ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mnku ji ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-body{margin:0;overflow:hidden;background:black;font-family:sans-serif;color:white;}
+        body {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            overflow: hidden;
+            background: #000;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: pan-y;
+        }
 
-.page{
-position:absolute;
-width:100%;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-opacity:0;
-transition:0.6s;
-}
-.page.active{opacity:1;z-index:10;}
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1;
+        }
 
-img{max-width:100%;max-height:100%;object-fit:contain;}
+        .page.active {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            z-index: 10;
+        }
 
-.text{
-font-size:1.4rem;
-text-align:center;
-padding:20px;
-line-height:1.5;
-}
+        .page.prev {
+            transform: translateY(-100px);
+        }
 
-.big{
-font-size:3rem;
-color:#ff4da6;
-animation:glow 1s infinite alternate;
-}
-@keyframes glow{
-from{text-shadow:0 0 10px #ff4da6;}
-to{text-shadow:0 0 30px #ff4da6;}
-}
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 70%);
+            z-index: 2;
+        }
 
-.controls{
-position:fixed;
-bottom:20px;
-width:100%;
-display:flex;
-justify-content:center;
-gap:15px;
-z-index:50;
-}
-button{
-padding:12px 20px;
-border:none;
-border-radius:30px;
-background:#ff4da6;
-color:white;
-}
+        .content {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            max-width: 90%;
+            padding: 20px;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
+        }
 
-.heart{
-position:fixed;
-color:#ff4da6;
-animation:fall linear;
-}
-@keyframes fall{
-0%{transform:translateY(-10vh);}
-100%{transform:translateY(110vh);}
-}
+        .title {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #ff6b9d, #ff8fb2, #ffb3d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
 
-.cake{font-size:4rem;animation:pop 1s infinite alternate;}
-@keyframes pop{
-from{transform:scale(1);}
-to{transform:scale(1.2);}
-}
-</style>
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 10px #ff6b9d); }
+            100% { filter: drop-shadow(0 0 30px #ff6b9d); }
+        }
+
+        .text-line {
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            line-height: 1.3;
+            margin: 25px 0;
+            opacity: 0;
+            min-height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 400;
+        }
+
+        .text-line.typing {
+            border-right: 4px solid #ff6b9d;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: #ff6b9d; }
+            51%, 100% { border-color: transparent; }
+        }
+
+        .photo {
+            width: 95%;
+            height: 95%;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            animation: photoZoom 10s infinite ease-in-out;
+        }
+
+        @keyframes photoZoom {
+            0%, 100% { transform: scale(1.02) rotate(0deg); }
+            25% { transform: scale(1.06) rotate(1deg); }
+            50% { transform: scale(1.04) rotate(0deg); }
+            75% { transform: scale(1.07) rotate(-1deg); }
+        }
+
+        video {
+            width: 85%;
+            max-width: 900px;
+            height: 75%;
+            object-fit: cover;
+            border-radius: 25px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+        }
+
+        .cake-container {
+            position: relative;
+            width: 70%;
+            height: 60%;
+            margin: 20px 0;
+        }
+
+        .cake {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 30px;
+        }
+
+        .cake-slice {
+            position: absolute;
+            width: 25%;
+            height: 40%;
+            background: linear-gradient(45deg, #ff6b9d, #ffb3d1);
+            border-radius: 50% 50% 0 0;
+            bottom: 20%;
+            right: 10%;
+            transform-origin: bottom left;
+            animation: cakeCut 4s ease-in-out infinite;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        }
+
+        @keyframes cakeCut {
+            0%, 70% { transform: rotate(0deg); }
+            80% { transform: rotate(-30deg); }
+            100% { transform: rotate(-45deg); }
+        }
+
+        .candles {
+            position: absolute;
+            top: -10%;
+            left: 20%;
+            width: 60%;
+            height: 20%;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .candle {
+            width: 12px;
+            height: 40px;
+            background: linear-gradient(to top, #f4a261, #e76f51);
+            border-radius: 6px 6px 0 0;
+            position: relative;
+        }
+
+        .flame {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 12px;
+            background: radial-gradient(circle, #ffeb3b, #ff9800);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flicker 0.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1) rotate(-1deg); }
+            100% { transform: translateX(-50%) scale(1.1) rotate(1deg); }
+        }
+
+        .final-content {
+            padding: 50px 30px;
+            max-width: 100%;
+        }
+
+        .final-title {
+            font-size: clamp(4rem, 12vw, 8rem) !important;
+            font-weight: 900;
+            margin: 30px 0;
+            color: #ff6b9d !important;
+            text-shadow: 0 0 40px #ff6b9d;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .nav {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            border: 3px solid rgba(255,107,157,0.6);
+            color: #ff6b9d;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-family: inherit;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: rgba(255,107,157,0.4);
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,107,157,0.5);
+            border-color: #ff6b9d;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .music-toggle {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            width: 70px;
+            height: 70px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(20px);
+            border: 3px solid #ff6b9d;
+            border-radius: 50%;
+            color: #ff6b9d;
+            font-size: 1.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: all 0.4s ease;
+            font-weight: bold;
+        }
+
+        .music-toggle:hover {
+            background: rgba(255,107,157,0.4);
+            transform: scale(1.15) rotate(180deg);
+            box-shadow: 0 10px 30px rgba(255,107,157,0.5);
+        }
+
+        .music-toggle.playing::before {
+            content: "🎵";
+            animation: musicSpin 2s linear infinite;
+        }
+
+        .music-toggle.paused::before {
+            content: "🔇";
+        }
+
+        @keyframes musicSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: clamp(16px, 3vw, 28px);
+            color: #ff6b9d;
+            pointer-events: none;
+            animation: floatHeart 8s infinite linear;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(720deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 6px;
+            background: linear-gradient(90deg, #ff6b9d, #ff8fb2, #ffb3d1);
+            z-index: 1000;
+            box-shadow: 0 0 20px #ff6b9d;
+            transition: width 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .nav { bottom: 25px; gap: 15px; }
+            .nav-btn { padding: 15px 25px; font-size: 1rem; }
+            video { width: 92%; height: 70%; }
+            .photo { width: 98%; height: 98%; }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="progress"></div>
+    <div class="hearts" id="hearts"></div>
 
-<audio id="music" src="music.mp3" loop></audio>
-<div id="container"></div>
+    <!-- TOTAL 20 PAGES - FULL PHOTO GALLERY + PERFECT FLOW -->
 
-<div class="controls">
-<button onclick="prev()">Prev</button>
-<button onclick="next()">Next</button>
-<button onclick="toggleMusic()">Music</button>
-</div>
+    <!-- Page 1: Title -->
+    <div class="page" data-page="1" style="background-image: url('bg1.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="title">Mnku ji ❤️</div>
+            <div class="text-line" data-text="Aaj ka din normal nahi hai..."></div>
+            <div class="text-line" data-text="kyunki aaj duniya ki sabse pyaari ladki ka birthday hai..."></div>
+        </div>
+    </div>
 
-<script>
-let pages=[], i=0, music=document.getElementById("music"), playing=false;
+    <!-- Emotional Story Pages -->
+    <div class="page" data-page="2" style="background-image: url('bg2.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="text-line" data-text="Aapki muskurahat ne meri zindagi roshan kar di..."></div>
+            <div class="text-line" data-text="Har pal aapke saath ek khubsurat yaad ban jata hai..."></div>
+        </div>
+    </div>
 
-function addPage(html){
-let d=document.createElement("div");
-d.className="page";
-d.innerHTML=html;
-container.appendChild(d);
-pages.push(d);
-}
+    <div class="page" data-page="3" style="background-image: url('bg3.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="text-line" data-text="Aapki aankhon mein woh jadoo hai..."></div>
+            <div class="text-line" data-text="jo mujhe nayi manzilein dikhata hai..."></div>
+        </div>
+    </div>
 
-/* TYPE ANIMATION */
-function type(el,text,speed=35){
-let i=0;
-el.innerHTML="";
-let int=setInterval(()=>{
-el.innerHTML+=text[i];
-i++;
-if(i>=text.length) clearInterval(int);
-},speed);
-}
+    <div class="page" data-page="4" style="background-image: url('bg4.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="text-line" data-text="Aap mere liye khushi ka sabse bada karan ho..."></div>
+            <div class="text-line" data-text="Hamesha aise hi khilti, muskurati rahiye..."></div>
+        </div>
+    </div>
 
-/* 💖 MESSAGE PAGES */
-let msgs=[
-"Mnku ji ❤️",
-"Aaj ka din normal nahi hai...",
-"Kyuki aaj duniya ki sabse pyaari ladki ka birthday hai 💖",
-"Aap meri life ka sabse beautiful part ho...",
-"Sach bolu to... aapke bina sab adhoora lagta hai...",
-"Aapki smile... meri weakness hai 😭❤️",
-"Jab bhi aap haste ho na... dil khush ho jata hai 💘",
-"Aap sirf special nahi ho...",
-"Aap meri aadat ban chuki ho ❤️",
-"Main har din bas ye chahta hu...",
-"Ki aap hamesha khush raho 💖",
-"Chahe kuch bhi ho jaye...",
-"Main hamesha aapke saath rahunga ❤️",
-"Aap meri duniya ho...",
-"Mera sab kuch ho 💘",
-"Aur aaj ka din sirf aapke naam ❤️"
-];
+    <!-- FULL PHOTO GALLERY - ONE PHOTO PER PAGE (16 PAGES) -->
+    <div class="page" data-page="5" style="background-image: url('bg5.jpg');">
+        <div class="overlay"></div>
+        <img src="her1.jpg" class="photo" alt="Mnku ji">
+    </div>
 
-msgs.forEach(m=>{
-addPage(`<div class="text" id="t${pages.length}"></div>`);
-setTimeout(()=>{
-let el=document.querySelectorAll(".text")[pages.length-1];
-type(el,m);
-},500);
-});
+    <div class="page" data-page="6" style="background-image: url('bg6.jpg');">
+        <div class="overlay"></div>
+        <img src="her2.jpg" class="photo" alt="Mnku ji">
+    </div>
 
-/* 📸 PHOTOS */
-["her1.jpg","her2.jpg","her3.jpg","her4.jpg","her5.jpg","her6.jpg","her7.jpg","her8.jpg",
-"us1.jpg","us2.jpg","us3.jpg","us4.jpg","us5.jpg"]
-.forEach(p=>addPage(`<img src="${p}">`));
+    <div class="page" data-page="7" style="background-image: url('bg7.jpg');">
+        <div class="overlay"></div>
+        <img src="her3.jpg" class="photo" alt="Mnku ji">
+    </div>
 
-/* 🎬 VIDEOS */
-addPage(`<video src="v1.mp4" autoplay loop muted style="width:100%"></video>`);
-addPage(`<video src="v2.mp4" autoplay loop muted style="width:100%"></video>`);
+    <div class="page" data-page="8" style="background-image: url('bg8.jpg');">
+        <div class="overlay"></div>
+        <img src="her4.jpg" class="photo" alt="Mnku ji">
+    </div>
 
-/* 🎂 CAKE ANIMATION */
-addPage(`<div class="text"><div class="cake">🎂</div>Make a wish Mnku ji 💖</div>`);
+    <div class="page" data-page="9" style="background-image: url('bg9.jpg');">
+        <div class="overlay"></div>
+        <img src="her5.jpg" class="photo" alt="Mnku ji">
+    </div>
 
-/* 🎂 CAKE VIDEO */
-addPage(`<video src="cake.mp4" autoplay loop muted style="width:100%"></video>`);
+    <div class="page" data-page="10" style="background-image: url('bg10.jpg');">
+        <div class="overlay"></div>
+        <img src="her6.jpg" class="photo" alt="Mnku ji">
+    </div>
 
-/* 💌 MESSAGE VIDEO */
-addPage(`<video src="msg.mp4" autoplay loop muted style="width:100%"></video>`);
+    <div class="page" data-page="11" style="background-image: url('bg5.jpg');">
+        <div class="overlay"></div>
+        <img src="her7.jpg" class="photo" alt="Mnku ji">
+    </div>
 
-/* 💘 FINAL */
-addPage(`
-<div class="text">
-<div class="big">I LOVE YOU ❤️</div>
-Happy Birthday Mnku ji 💖<br>
-Aap meri life ka sabse important part ho ❤️<br>
-Aur hamesha rahoge 💘
-</div>
-`);
+    <div class="page" data-page="12" style="background-image: url('bg6.jpg');">
+        <div class="overlay"></div>
+        <img src="her8.jpg" class="photo" alt="Mnku ji">
+    </div>
 
-/* NAV */
-function show(n){
-pages.forEach(p=>p.classList.remove("active"));
-pages[n].classList.add("active");
-}
-show(0);
+    <div class="page" data-page="13" style="background-image: url('bg7.jpg');">
+        <div class="overlay"></div>
+        <img src="us1.jpg" class="photo" alt="Hum">
+    </div>
 
-function next(){ if(i<pages.length-1){i++;show(i);} }
-function prev(){ if(i>0){i--;show(i);} }
+    <div class="page" data-page="14" style="background-image: url('bg8.jpg');">
+        <div class="overlay"></div>
+        <img src="us2.jpg" class="photo" alt="Hum">
+    </div>
 
-/* MUSIC */
-function toggleMusic(){
-playing ? music.pause() : music.play();
-playing=!playing;
-}
+    <div class="page" data-page="15" style="background-image: url('bg9.jpg');">
+        <div class="overlay"></div>
+        <img src="us3.jpg" class="photo" alt="Hum">
+    </div>
 
-/* HEARTS */
-setInterval(()=>{
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.animationDuration=(Math.random()*3+2)+"s";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),5000);
-},300);
-</script>
+    <div class="page" data-page="16" style="background-image: url('bg10.jpg');">
+        <div class="overlay"></div>
+        <img src="us4.jpg" class="photo" alt="Hum">
+    </div>
 
-</body>
-</html>
+    <div class="page" data-page="17" style="background-image: url('bg11.jpg');">
+        <div class="overlay"></div>
+        <img src="us5.jpg" class="photo" alt="Hum">
+    </div>
+
+    <!-- Video 1 -->
+    <div class="page" data-page="18" style="background-image: url('bg11.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <video autoplay muted loop playsinline>
+                <source src="v1.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <!-- US Video 1 -->
+    <div class="page" data-page="19" style="background-image: url('bg12.jpg');">
+        <div class="overlay"></div>
+        <div class="content">
+            <video autoplay muted loop playsinline>
+                <source src="usv1.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <!-- CAKE CUT ANIMATION PAGE -->
+    <div class="page" data-page="20" style="background-image: url('bg12.jpg');">
+        <div class="overlay"></div>
+        <div class="content final-content">
+            <div class="cake-container">
+               
