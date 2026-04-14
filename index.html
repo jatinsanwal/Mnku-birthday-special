@@ -7,22 +7,23 @@
 <style>
 body{
 margin:0;
-font-family:sans-serif;
-background:linear-gradient(135deg,#ff4da6,#000);
-color:white;
+font-family: 'Segoe UI';
 overflow:hidden;
+background:black;
+color:white;
 }
 
 .page{
 position:absolute;
-top:0;left:0;
-width:100%;height:100vh;
+width:100%;
+height:100vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 opacity:0;
-transition:0.5s;
+transition:1s;
+background:linear-gradient(135deg,#ff4da6,#000);
 }
 .active{opacity:1;}
 
@@ -30,19 +31,27 @@ img,video{
 width:90%;
 max-height:70vh;
 object-fit:cover;
-border-radius:15px;
-box-shadow:0 10px 30px rgba(0,0,0,0.5);
+border-radius:20px;
+box-shadow:0 0 40px rgba(255,0,150,0.5);
 }
 
 .text{
 font-size:1.5rem;
 text-align:center;
 padding:20px;
+max-width:90%;
+}
+
+.big{
+font-size:3rem;
+color:#ff4da6;
+text-shadow:0 0 20px #ff4da6;
 }
 
 .caption{
 margin-top:10px;
 color:#ffd1e6;
+font-size:1.2rem;
 }
 
 .controls{
@@ -51,22 +60,36 @@ bottom:20px;
 width:100%;
 display:flex;
 justify-content:center;
-gap:10px;
+gap:15px;
 }
 
 button{
-padding:10px 15px;
+padding:12px 18px;
 border:none;
-border-radius:20px;
+border-radius:25px;
 background:#ff4da6;
 color:white;
-font-size:15px;
+font-size:16px;
+box-shadow:0 0 15px #ff4da6;
 }
 
-.big{
-font-size:2.5rem;
-color:#fff;
-text-shadow:0 0 20px #ff4da6;
+.hearts span{
+position:fixed;
+font-size:20px;
+animation:fall linear infinite;
+color:#ff4da6;
+}
+@keyframes fall{
+0%{transform:translateY(-100px);}
+100%{transform:translateY(100vh);}
+}
+
+.typing::after{
+content:"|";
+animation:blink 1s infinite;
+}
+@keyframes blink{
+0%{opacity:1;}50%{opacity:0;}100%{opacity:1;}
 }
 
 </style>
@@ -76,7 +99,9 @@ text-shadow:0 0 20px #ff4da6;
 
 <audio id="music" src="music.mp3" loop></audio>
 
-<div id="container"></div>
+<div class="hearts" id="hearts"></div>
+
+<div id="pages"></div>
 
 <div class="controls">
 <button onclick="prev()">Prev</button>
@@ -86,70 +111,70 @@ text-shadow:0 0 20px #ff4da6;
 
 <script>
 
-let container=document.getElementById("container");
 let pages=[];
-let index=0;
+let container=document.getElementById("pages");
 
-function add(content){
+function add(html){
 let div=document.createElement("div");
 div.className="page";
-div.innerHTML=content;
+div.innerHTML=html;
 container.appendChild(div);
 pages.push(div);
 }
 
 /* INTRO */
-add(`
-<div class="text">
-<h1 class="big">Mnku ji ❤️</h1>
-Aaj ka din normal nahi hai... 💖<br><br>
-Kyuki aaj meri duniya ki sabse pyaari ladki ka birthday hai ❤️
-</div>
-`);
+add(`<div class="text typing" id="t1"></div>`);
 
 /* MESSAGES */
 [
-"Aap meri life ki sabse beautiful feeling ho 💖",
+"Aaj ka din normal nahi hai... 💖",
+"Kyuki aaj meri duniya ki sabse pyaari ladki ka birthday hai ❤️",
+"Aap meri life ki sabse beautiful feeling ho 💞",
 "Aapki smile meri sabse badi weakness hai 😭❤️",
-"Jab bhi aap haste ho sab perfect lagta hai 💞",
-"Aap meri aadat ban chuke ho 💘",
 "Aap bina sab adhoora lagta hai 💔"
 ].forEach(t=>{
 add(`<div class="text">${t}</div>`);
 });
 
-/* PHOTOS (SAFE LOAD) */
-function imgPage(src,text){
+/* PHOTOS */
+function img(src,cap){
 add(`
 <img src="${src}" onerror="this.src='https://picsum.photos/400/600'">
-<div class="caption">${text}</div>
+<div class="caption">${cap}</div>
 `);
 }
 
-imgPage("her1.jpg","Only you 💖");
-imgPage("her2.jpg","How cute 😭❤️");
-imgPage("her3.jpg","Meri pyari si duniya 💞");
+img("her1.jpg","Only you 💖");
+img("her2.jpg","How cute 😭❤️");
+img("her3.jpg","Meri pyari si princess 👑");
+img("her4.jpg","Bas aap hi aap 💘");
 
-imgPage("us1.jpg","Beautiful moment ❤️");
-imgPage("us2.jpg","Perfect together 💘");
+img("us1.jpg","Our beautiful moment ❤️");
+img("us2.jpg","Perfect together 💞");
 
 /* VIDEOS */
-add(`<video src="v1.mp4" autoplay muted loop></video><div class="caption">Memories ❤️</div>`);
-add(`<video src="usv1.mp4" autoplay muted loop></video><div class="caption">Us ❤️</div>`);
+add(`<video src="v1.mp4" autoplay muted loop></video><div class="caption">Memories 💗</div>`);
+add(`<video src="usv1.mp4" autoplay muted loop></video><div class="caption">Us 💞</div>`);
 
-/* CAKE */
+/* CAKE ANIMATION */
+add(`<div class="text">
+🎂 Make a wish...<br><br>
+💨 *Blow the candle* 💨
+</div>`);
+
+/* CAKE VIDEO */
 add(`<video src="cake.mp4" controls autoplay></video>`);
 
 /* MESSAGE VIDEO */
 add(`<video src="msg.mp4" controls autoplay></video>`);
 
 /* FINAL */
-add(`
-<div class="text">
+add(`<div class="text">
 Aap meri life ka sabse important part ho ❤️<br><br>
 <h1 class="big">I LOVE YOU ❤️</h1>
-</div>
-`);
+</div>`);
+
+let index=0;
 
 function show(i){
 pages.forEach(p=>p.classList.remove("active"));
@@ -157,28 +182,43 @@ pages[i].classList.add("active");
 }
 
 function next(){
-if(index<pages.length-1){
-index++;
-show(index);
+if(index<pages.length-1){index++;show(index);}
 }
-}
-
 function prev(){
-if(index>0){
-index--;
-show(index);
-}
+if(index>0){index--;show(index);}
 }
 
 show(0);
 
+/* MUSIC */
 let music=document.getElementById("music");
 let playing=false;
-
 function musicToggle(){
 playing?music.pause():music.play();
 playing=!playing;
 }
+
+/* HEARTS */
+setInterval(()=>{
+let h=document.createElement("span");
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"%";
+h.style.animationDuration=(3+Math.random()*3)+"s";
+document.getElementById("hearts").appendChild(h);
+setTimeout(()=>h.remove(),5000);
+},300);
+
+/* TYPING */
+let text="Mnku ji ❤️\n\nAaj ka din normal nahi hai...";
+let i=0;
+function type(){
+if(i<text.length){
+document.getElementById("t1").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,50);
+}
+}
+type();
 
 </script>
 
