@@ -5,220 +5,199 @@
 <title>Mnku ji ❤️</title>
 
 <style>
-body{
-margin:0;
-font-family: 'Segoe UI';
-overflow:hidden;
-background:black;
-color:white;
-}
-
-.page{
-position:absolute;
-width:100%;
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-opacity:0;
-transition:1s;
-background:linear-gradient(135deg,#ff4da6,#000);
-}
-.active{opacity:1;}
-
-img,video{
-width:90%;
-max-height:70vh;
-object-fit:cover;
-border-radius:20px;
-box-shadow:0 0 40px rgba(255,0,150,0.5);
-}
-
-.text{
-font-size:1.5rem;
-text-align:center;
-padding:20px;
-max-width:90%;
-}
-
-.big{
-font-size:3rem;
-color:#ff4da6;
-text-shadow:0 0 20px #ff4da6;
-}
-
-.caption{
-margin-top:10px;
-color:#ffd1e6;
-font-size:1.2rem;
-}
-
-.controls{
-position:fixed;
-bottom:20px;
-width:100%;
-display:flex;
-justify-content:center;
-gap:15px;
-}
-
-button{
-padding:12px 18px;
-border:none;
-border-radius:25px;
-background:#ff4da6;
-color:white;
-font-size:16px;
-box-shadow:0 0 15px #ff4da6;
-}
-
-.hearts span{
-position:fixed;
-font-size:20px;
-animation:fall linear infinite;
-color:#ff4da6;
-}
-@keyframes fall{
-0%{transform:translateY(-100px);}
-100%{transform:translateY(100vh);}
-}
-
-.typing::after{
-content:"|";
-animation:blink 1s infinite;
-}
-@keyframes blink{
-0%{opacity:1;}50%{opacity:0;}100%{opacity:1;}
-}
-
-</style>
-</head>
-
-<body>
-
-<audio id="music" src="music.mp3" loop></audio>
-
-<div class="hearts" id="hearts"></div>
-
-<div id="pages"></div>
-
-<div class="controls">
-<button onclick="prev()">Prev</button>
-<button onclick="next()">Next</button>
-<button onclick="musicToggle()">Music</button>
-</div>
-
-<script>
-
-let pages=[];
-let container=document.getElementById("pages");
-
-function add(html){
-let div=document.createElement("div");
-div.className="page";
-div.innerHTML=html;
-container.appendChild(div);
-pages.push(div);
-}
-
-/* INTRO */
-add(`<div class="text typing" id="t1"></div>`);
-
-/* MESSAGES */
-[
-"Aaj ka din normal nahi hai... 💖",
-"Kyuki aaj meri duniya ki sabse pyaari ladki ka birthday hai ❤️",
-"Aap meri life ki sabse beautiful feeling ho 💞",
-"Aapki smile meri sabse badi weakness hai 😭❤️",
-"Aap bina sab adhoora lagta hai 💔"
-].forEach(t=>{
-add(`<div class="text">${t}</div>`);
-});
-
-/* PHOTOS */
-function img(src,cap){
-add(`
-<img src="${src}" onerror="this.src='https://picsum.photos/400/600'">
-<div class="caption">${cap}</div>
-`);
-}
-
-img("her1.jpg","Only you 💖");
-img("her2.jpg","How cute 😭❤️");
-img("her3.jpg","Meri pyari si princess 👑");
-img("her4.jpg","Bas aap hi aap 💘");
-
-img("us1.jpg","Our beautiful moment ❤️");
-img("us2.jpg","Perfect together 💞");
-
-/* VIDEOS */
-add(`<video src="v1.mp4" autoplay muted loop></video><div class="caption">Memories 💗</div>`);
-add(`<video src="usv1.mp4" autoplay muted loop></video><div class="caption">Us 💞</div>`);
-
-/* CAKE ANIMATION */
-add(`<div class="text">
-🎂 Make a wish...<br><br>
-💨 *Blow the candle* 💨
-</div>`);
-
-/* CAKE VIDEO */
-add(`<video src="cake.mp4" controls autoplay></video>`);
-
-/* MESSAGE VIDEO */
-add(`<video src="msg.mp4" controls autoplay></video>`);
-
-/* FINAL */
-add(`<div class="text">
-Aap meri life ka sabse important part ho ❤️<br><br>
-<h1 class="big">I LOVE YOU ❤️</h1>
-</div>`);
-
-let index=0;
-
-function show(i){
-pages.forEach(p=>p.classList.remove("active"));
-pages[i].classList.add("active");
-}
-
-function next(){
-if(index<pages.length-1){index++;show(index);}
-}
-function prev(){
-if(index>0){index--;show(index);}
-}
-
-show(0);
-
-/* MUSIC */
-let music=document.getElementById("music");
-let playing=false;
-function musicToggle(){
-playing?music.pause():music.play();
-playing=!playing;
+body {
+    margin:0;
+    font-family: sans-serif;
+    text-align:center;
+    color:white;
+    background: linear-gradient(135deg,#ff4e8a,#7a003c);
 }
 
 /* HEARTS */
-setInterval(()=>{
-let h=document.createElement("span");
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"%";
-h.style.animationDuration=(3+Math.random()*3)+"s";
-document.getElementById("hearts").appendChild(h);
-setTimeout(()=>h.remove(),5000);
-},300);
+.heart {
+    position:fixed;
+    top:-10px;
+    color:red;
+    animation:fall 6s linear infinite;
+}
+@keyframes fall {
+    to { transform:translateY(100vh); }
+}
 
-/* TYPING */
-let text="Mnku ji ❤️\n\nAaj ka din normal nahi hai...";
+/* CONTENT */
+.container {
+    padding:20px;
+}
+
+h1 {
+    font-size:40px;
+    color:#ff3f87;
+}
+
+/* IMAGE / VIDEO */
+.media {
+    width:90%;
+    max-height:60vh;
+    object-fit:cover;
+    border-radius:20px;
+}
+
+/* CAPTION */
+.caption {
+    font-size:20px;
+    margin:10px;
+}
+
+/* BUTTONS */
+.buttons {
+    position:fixed;
+    bottom:20px;
+    width:100%;
+}
+button {
+    padding:12px 20px;
+    margin:5px;
+    border:none;
+    border-radius:20px;
+    background:#ff3f87;
+    color:white;
+    font-size:16px;
+}
+
+/* CAKE */
+.cake {
+    font-size:60px;
+}
+</style>
+
+</head>
+<body>
+
+<div id="hearts"></div>
+
+<div class="container">
+
+<h1>Mnku ji ❤️</h1>
+
+<p id="text">Aaj ka din normal nahi hai...</p>
+
+<img id="photo" class="media" src="her1.jpg">
+
+<video id="video" class="media" controls style="display:none"></video>
+
+<p class="caption" id="caption">Only you ❤️</p>
+
+</div>
+
+<div class="buttons">
+<button onclick="prev()">Prev</button>
+<button onclick="next()">Next</button>
+<button onclick="music()">Music</button>
+</div>
+
+<audio id="bgmusic" src="music.mp3"></audio>
+
+<script>
+
+/* ❤️ HEARTS */
+function createHearts(){
+    let h = document.createElement("div");
+    h.innerHTML="❤️";
+    h.className="heart";
+    h.style.left=Math.random()*100+"%";
+    h.style.fontSize=(15+Math.random()*20)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+}
+setInterval(createHearts,300);
+
+
+/* 📸 ALL CONTENT */
+let data = [
+
+{type:"text", text:"Aaj ka din normal nahi hai... 💖"},
+{type:"text", text:"Kyuki aaj meri duniya ki sabse pyaari ladki ka birthday hai ❤️"},
+{type:"text", text:"Aap meri life ki sabse beautiful feeling ho 💕"},
+{type:"text", text:"Aapki smile meri duniya hai 😍"},
+
+{type:"img", src:"her1.jpg", cap:"Only you ❤️"},
+{type:"img", src:"her2.jpg", cap:"Kitni cute ho aap 🥺"},
+{type:"img", src:"her3.jpg", cap:"My favorite person 💗"},
+{type:"img", src:"her4.jpg", cap:"Bas aap hi aap ❤️"},
+
+{type:"img", src:"us1.jpg", cap:"Our beautiful moment ❤️"},
+{type:"img", src:"us2.jpg", cap:"Best memory together 💞"},
+
+{type:"video", src:"v1.mp4", cap:"Your cute video 💕"},
+{type:"video", src:"usv1.mp4", cap:"Our memories 💖"},
+
+{type:"cake"},
+{type:"video", src:"cake.mp4", cap:"Birthday celebration 🎂"},
+{type:"video", src:"msg.mp4", cap:"Special message 💌"},
+
+{type:"text", text:"Aap meri duniya ho... ❤️"},
+{type:"text", text:"I Love You So Much ❤️❤️❤️"}
+
+];
+
 let i=0;
-function type(){
-if(i<text.length){
-document.getElementById("t1").innerHTML+=text.charAt(i);
-i++;
-setTimeout(type,50);
+
+function show(){
+    let item=data[i];
+
+    let photo=document.getElementById("photo");
+    let video=document.getElementById("video");
+    let text=document.getElementById("text");
+    let cap=document.getElementById("caption");
+
+    photo.style.display="none";
+    video.style.display="none";
+
+    if(item.type=="text"){
+        text.innerHTML=item.text;
+        cap.innerHTML="";
+    }
+
+    if(item.type=="img"){
+        text.innerHTML="";
+        photo.src=item.src;
+        photo.style.display="block";
+        cap.innerHTML=item.cap;
+    }
+
+    if(item.type=="video"){
+        text.innerHTML="";
+        video.src=item.src;
+        video.style.display="block";
+        video.play();
+        cap.innerHTML=item.cap;
+    }
+
+    if(item.type=="cake"){
+        text.innerHTML="🎂 Make a wish... blow candle 🎉";
+        cap.innerHTML="Tap Next ❤️";
+    }
 }
+
+function next(){
+    i++;
+    if(i>=data.length) i=0;
+    show();
 }
-type();
+
+function prev(){
+    i--;
+    if(i<0) i=data.length-1;
+    show();
+}
+
+function music(){
+    let m=document.getElementById("bgmusic");
+    if(m.paused) m.play();
+    else m.pause();
+}
+
+show();
 
 </script>
 
