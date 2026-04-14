@@ -10,10 +10,10 @@ font-family:sans-serif;
 background:linear-gradient(135deg,#ff4e8a,#7a003c);
 color:white;
 text-align:center;
-overflow:hidden;
+overflow-x:hidden;
 }
 
-/* FLOAT HEARTS */
+/* HEARTS */
 .heart{
 position:fixed;
 color:red;
@@ -24,48 +24,34 @@ animation:fall 5s linear infinite;
 to{transform:translateY(100vh);}
 }
 
-/* CARD */
+/* SECTION */
+.section{
+padding:40px 20px;
+}
+
+/* GLASS CARD */
 .card{
-margin-top:40px;
-background:rgba(255,255,255,0.1);
+background:rgba(255,255,255,0.15);
 backdrop-filter:blur(10px);
 padding:20px;
 border-radius:20px;
-width:90%;
-margin-left:auto;
-margin-right:auto;
+margin:20px;
 }
 
 /* MEDIA */
 img,video{
 width:100%;
 border-radius:20px;
-max-height:60vh;
-object-fit:cover;
+margin-top:10px;
 }
 
 /* TEXT */
 h1{color:#ff3f87;}
-.caption{margin-top:10px;font-size:20px;}
-
-/* BUTTON */
-.btns{
-position:fixed;
-bottom:20px;
-width:100%;
-}
-button{
-padding:12px 18px;
-margin:5px;
-border:none;
-border-radius:20px;
-background:#ff3f87;
-color:white;
-}
+p{font-size:20px;}
 
 /* CAKE */
 .cake{
-font-size:80px;
+font-size:90px;
 animation:jump 1s infinite alternate;
 }
 @keyframes jump{
@@ -76,28 +62,7 @@ to{transform:translateY(-10px);}
 
 <body>
 
-<div id="hearts"></div>
-
-<div class="card">
-
-<h1>Mnku ji ❤️</h1>
-
-<div id="content"></div>
-<p class="caption" id="cap"></p>
-
-</div>
-
-<div class="btns">
-<button onclick="prev()">Prev</button>
-<button onclick="next()">Next</button>
-<button onclick="music()">Music</button>
-</div>
-
-<audio id="m" src="music.mp3"></audio>
-
 <script>
-
-/* HEARTS */
 setInterval(()=>{
 let h=document.createElement("div");
 h.className="heart";
@@ -107,75 +72,58 @@ h.style.fontSize=(15+Math.random()*20)+"px";
 document.body.appendChild(h);
 setTimeout(()=>h.remove(),5000);
 },300);
-
-
-/* DATA */
-let data=[
-
-{t:"text",c:"Aaj ka din normal nahi hai... 💖"},
-{t:"text",c:"Kyuki aaj meri duniya ki sabse pyaari ladki ka birthday hai ❤️"},
-{t:"text",c:"Aap meri life ki sabse beautiful feeling ho 💕"},
-{t:"text",c:"Aapki smile meri jaan hai 😍"},
-
-{t:"img",s:"her1.jpg",cap:"Only you ❤️"},
-{t:"img",s:"her2.jpg",cap:"Kitni cute ho aap 🥺"},
-{t:"img",s:"her3.jpg",cap:"My favorite person 💗"},
-{t:"img",s:"her4.jpg",cap:"Bas aap hi aap ❤️"},
-
-{t:"img",s:"us1.jpg",cap:"Our beautiful moment ❤️"},
-{t:"img",s:"us2.jpg",cap:"Best memories 💞"},
-
-{t:"video",s:"v1.mp4",cap:"Your cute moments 💕"},
-{t:"video",s:"usv1.mp4",cap:"Our memories 💖"},
-
-{t:"cake"},
-
-{t:"video",s:"cake.mp4",cap:"Birthday celebration 🎂"},
-{t:"video",s:"msg.mp4",cap:"Special message 💌"},
-
-{t:"text",c:"Aap meri duniya ho ❤️"},
-{t:"text",c:"I LOVE YOU SO MUCH ❤️❤️❤️"}
-
-];
-
-let i=0;
-
-function show(){
-let d=data[i];
-let div=document.getElementById("content");
-let cap=document.getElementById("cap");
-
-div.innerHTML="";
-cap.innerHTML="";
-
-if(d.t=="text"){
-div.innerHTML="<h2>"+d.c+"</h2>";
-}
-
-if(d.t=="img"){
-div.innerHTML="<img src='"+d.s+"'>";
-cap.innerHTML=d.cap;
-}
-
-if(d.t=="video"){
-div.innerHTML="<video src='"+d.s+"' controls autoplay></video>";
-cap.innerHTML=d.cap;
-}
-
-if(d.t=="cake"){
-div.innerHTML="<div class='cake' onclick='alert(\"Make a wish ❤️\")'>🎂</div><p>Tap cake 🎉</p>";
-}
-}
-
-function next(){i++;if(i>=data.length)i=0;show();}
-function prev(){i--;if(i<0)i=data.length-1;show();}
-function music(){
-let m=document.getElementById("m");
-if(m.paused)m.play(); else m.pause();
-}
-
-show();
 </script>
+
+<div class="section card">
+<h1>Mnku ji ❤️</h1>
+<p>Aaj ka din normal nahi hai... 💖</p>
+<p>Kyuki aaj meri duniya ki sabse pyaari ladki ka birthday hai ❤️</p>
+</div>
+
+<div class="section card">
+<p>Aap meri life ki sabse beautiful feeling ho 💕</p>
+<p>Aap meri duniya ho ❤️</p>
+</div>
+
+<div class="section card">
+<img src="her1.jpg">
+<p>Kitni cute ho aap 🥺</p>
+</div>
+
+<div class="section card">
+<img src="her2.jpg">
+<p>Bas aap hi aap ❤️</p>
+</div>
+
+<div class="section card">
+<img src="us1.jpg">
+<p>Our beautiful memories 💞</p>
+</div>
+
+<div class="section card">
+<video src="v1.mp4" autoplay controls></video>
+<p>Your cute moments 💕</p>
+</div>
+
+<div class="section card">
+<div class="cake" onclick="alert('Make a wish ❤️')">🎂</div>
+<p>Tap the cake 🎉</p>
+</div>
+
+<div class="section card">
+<video src="cake.mp4" controls></video>
+<p>Birthday celebration 🎂</p>
+</div>
+
+<div class="section card">
+<video src="msg.mp4" controls></video>
+<p>Special message 💌</p>
+</div>
+
+<div class="section card">
+<h2>I LOVE YOU SO MUCH ❤️❤️❤️</h2>
+<p>Forever yours 💖</p>
+</div>
 
 </body>
 </html>
