@@ -2,203 +2,179 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mnku ji ❤️</title>
 
 <style>
-body {
-    margin:0;
-    font-family: sans-serif;
-    text-align:center;
-    color:white;
-    background: linear-gradient(135deg,#ff4e8a,#7a003c);
+body{
+margin:0;
+font-family:sans-serif;
+background:linear-gradient(135deg,#ff4e8a,#7a003c);
+color:white;
+text-align:center;
+overflow:hidden;
 }
 
-/* HEARTS */
-.heart {
-    position:fixed;
-    top:-10px;
-    color:red;
-    animation:fall 6s linear infinite;
+/* FLOAT HEARTS */
+.heart{
+position:fixed;
+color:red;
+top:-10px;
+animation:fall 5s linear infinite;
 }
-@keyframes fall {
-    to { transform:translateY(100vh); }
-}
-
-/* CONTENT */
-.container {
-    padding:20px;
+@keyframes fall{
+to{transform:translateY(100vh);}
 }
 
-h1 {
-    font-size:40px;
-    color:#ff3f87;
+/* CARD */
+.card{
+margin-top:40px;
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(10px);
+padding:20px;
+border-radius:20px;
+width:90%;
+margin-left:auto;
+margin-right:auto;
 }
 
-/* IMAGE / VIDEO */
-.media {
-    width:90%;
-    max-height:60vh;
-    object-fit:cover;
-    border-radius:20px;
+/* MEDIA */
+img,video{
+width:100%;
+border-radius:20px;
+max-height:60vh;
+object-fit:cover;
 }
 
-/* CAPTION */
-.caption {
-    font-size:20px;
-    margin:10px;
-}
+/* TEXT */
+h1{color:#ff3f87;}
+.caption{margin-top:10px;font-size:20px;}
 
-/* BUTTONS */
-.buttons {
-    position:fixed;
-    bottom:20px;
-    width:100%;
+/* BUTTON */
+.btns{
+position:fixed;
+bottom:20px;
+width:100%;
 }
-button {
-    padding:12px 20px;
-    margin:5px;
-    border:none;
-    border-radius:20px;
-    background:#ff3f87;
-    color:white;
-    font-size:16px;
+button{
+padding:12px 18px;
+margin:5px;
+border:none;
+border-radius:20px;
+background:#ff3f87;
+color:white;
 }
 
 /* CAKE */
-.cake {
-    font-size:60px;
+.cake{
+font-size:80px;
+animation:jump 1s infinite alternate;
+}
+@keyframes jump{
+to{transform:translateY(-10px);}
 }
 </style>
-
 </head>
+
 <body>
 
 <div id="hearts"></div>
 
-<div class="container">
+<div class="card">
 
 <h1>Mnku ji ❤️</h1>
 
-<p id="text">Aaj ka din normal nahi hai...</p>
-
-<img id="photo" class="media" src="her1.jpg">
-
-<video id="video" class="media" controls style="display:none"></video>
-
-<p class="caption" id="caption">Only you ❤️</p>
+<div id="content"></div>
+<p class="caption" id="cap"></p>
 
 </div>
 
-<div class="buttons">
+<div class="btns">
 <button onclick="prev()">Prev</button>
 <button onclick="next()">Next</button>
 <button onclick="music()">Music</button>
 </div>
 
-<audio id="bgmusic" src="music.mp3"></audio>
+<audio id="m" src="music.mp3"></audio>
 
 <script>
 
-/* ❤️ HEARTS */
-function createHearts(){
-    let h = document.createElement("div");
-    h.innerHTML="❤️";
-    h.className="heart";
-    h.style.left=Math.random()*100+"%";
-    h.style.fontSize=(15+Math.random()*20)+"px";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),6000);
-}
-setInterval(createHearts,300);
+/* HEARTS */
+setInterval(()=>{
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"%";
+h.style.fontSize=(15+Math.random()*20)+"px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),5000);
+},300);
 
 
-/* 📸 ALL CONTENT */
-let data = [
+/* DATA */
+let data=[
 
-{type:"text", text:"Aaj ka din normal nahi hai... 💖"},
-{type:"text", text:"Kyuki aaj meri duniya ki sabse pyaari ladki ka birthday hai ❤️"},
-{type:"text", text:"Aap meri life ki sabse beautiful feeling ho 💕"},
-{type:"text", text:"Aapki smile meri duniya hai 😍"},
+{t:"text",c:"Aaj ka din normal nahi hai... 💖"},
+{t:"text",c:"Kyuki aaj meri duniya ki sabse pyaari ladki ka birthday hai ❤️"},
+{t:"text",c:"Aap meri life ki sabse beautiful feeling ho 💕"},
+{t:"text",c:"Aapki smile meri jaan hai 😍"},
 
-{type:"img", src:"her1.jpg", cap:"Only you ❤️"},
-{type:"img", src:"her2.jpg", cap:"Kitni cute ho aap 🥺"},
-{type:"img", src:"her3.jpg", cap:"My favorite person 💗"},
-{type:"img", src:"her4.jpg", cap:"Bas aap hi aap ❤️"},
+{t:"img",s:"her1.jpg",cap:"Only you ❤️"},
+{t:"img",s:"her2.jpg",cap:"Kitni cute ho aap 🥺"},
+{t:"img",s:"her3.jpg",cap:"My favorite person 💗"},
+{t:"img",s:"her4.jpg",cap:"Bas aap hi aap ❤️"},
 
-{type:"img", src:"us1.jpg", cap:"Our beautiful moment ❤️"},
-{type:"img", src:"us2.jpg", cap:"Best memory together 💞"},
+{t:"img",s:"us1.jpg",cap:"Our beautiful moment ❤️"},
+{t:"img",s:"us2.jpg",cap:"Best memories 💞"},
 
-{type:"video", src:"v1.mp4", cap:"Your cute video 💕"},
-{type:"video", src:"usv1.mp4", cap:"Our memories 💖"},
+{t:"video",s:"v1.mp4",cap:"Your cute moments 💕"},
+{t:"video",s:"usv1.mp4",cap:"Our memories 💖"},
 
-{type:"cake"},
-{type:"video", src:"cake.mp4", cap:"Birthday celebration 🎂"},
-{type:"video", src:"msg.mp4", cap:"Special message 💌"},
+{t:"cake"},
 
-{type:"text", text:"Aap meri duniya ho... ❤️"},
-{type:"text", text:"I Love You So Much ❤️❤️❤️"}
+{t:"video",s:"cake.mp4",cap:"Birthday celebration 🎂"},
+{t:"video",s:"msg.mp4",cap:"Special message 💌"},
+
+{t:"text",c:"Aap meri duniya ho ❤️"},
+{t:"text",c:"I LOVE YOU SO MUCH ❤️❤️❤️"}
 
 ];
 
 let i=0;
 
 function show(){
-    let item=data[i];
+let d=data[i];
+let div=document.getElementById("content");
+let cap=document.getElementById("cap");
 
-    let photo=document.getElementById("photo");
-    let video=document.getElementById("video");
-    let text=document.getElementById("text");
-    let cap=document.getElementById("caption");
+div.innerHTML="";
+cap.innerHTML="";
 
-    photo.style.display="none";
-    video.style.display="none";
-
-    if(item.type=="text"){
-        text.innerHTML=item.text;
-        cap.innerHTML="";
-    }
-
-    if(item.type=="img"){
-        text.innerHTML="";
-        photo.src=item.src;
-        photo.style.display="block";
-        cap.innerHTML=item.cap;
-    }
-
-    if(item.type=="video"){
-        text.innerHTML="";
-        video.src=item.src;
-        video.style.display="block";
-        video.play();
-        cap.innerHTML=item.cap;
-    }
-
-    if(item.type=="cake"){
-        text.innerHTML="🎂 Make a wish... blow candle 🎉";
-        cap.innerHTML="Tap Next ❤️";
-    }
+if(d.t=="text"){
+div.innerHTML="<h2>"+d.c+"</h2>";
 }
 
-function next(){
-    i++;
-    if(i>=data.length) i=0;
-    show();
+if(d.t=="img"){
+div.innerHTML="<img src='"+d.s+"'>";
+cap.innerHTML=d.cap;
 }
 
-function prev(){
-    i--;
-    if(i<0) i=data.length-1;
-    show();
+if(d.t=="video"){
+div.innerHTML="<video src='"+d.s+"' controls autoplay></video>";
+cap.innerHTML=d.cap;
 }
 
+if(d.t=="cake"){
+div.innerHTML="<div class='cake' onclick='alert(\"Make a wish ❤️\")'>🎂</div><p>Tap cake 🎉</p>";
+}
+}
+
+function next(){i++;if(i>=data.length)i=0;show();}
+function prev(){i--;if(i<0)i=data.length-1;show();}
 function music(){
-    let m=document.getElementById("bgmusic");
-    if(m.paused) m.play();
-    else m.pause();
+let m=document.getElementById("m");
+if(m.paused)m.play(); else m.pause();
 }
 
 show();
-
 </script>
 
 </body>
