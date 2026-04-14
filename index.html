@@ -5,36 +5,59 @@
 <title>Mnku ji ❤️</title>
 
 <style>
-body{margin:0;background:#000;color:#fff;font-family:sans-serif;overflow:hidden;}
+body{margin:0;font-family:sans-serif;overflow:hidden;color:#fff;}
 
 .page{
 position:absolute;top:0;left:0;width:100%;height:100vh;
 display:flex;justify-content:center;align-items:center;
-flex-direction:column;opacity:0;transition:0.6s;
+flex-direction:column;
+background-size:cover;background-position:center;
+opacity:0;transition:0.6s;
 }
 .active{opacity:1;}
 
-img,video{
-width:100%;height:100%;
-object-fit:contain;background:black;
+.overlay{
+position:absolute;width:100%;height:100%;
+background:rgba(0,0,0,0.5);
 }
 
-.text{padding:20px;font-size:1.6rem;text-align:center;}
+.text{
+position:relative;
+font-size:1.6rem;
+text-align:center;
+padding:20px;
+z-index:2;
+}
 
 .big{
 font-size:3rem;color:#ff4da6;
 text-shadow:0 0 20px #ff4da6;
 }
 
+img,video{
+max-width:100%;
+max-height:80vh;
+border-radius:15px;
+z-index:2;
+}
+
+.caption{
+margin-top:10px;
+font-size:1.2rem;
+color:#ff85c1;
+}
+
 .controls{
 position:fixed;bottom:20px;width:100%;
 display:flex;justify-content:center;gap:10px;
+z-index:5;
 }
 button{
 padding:10px 18px;border:none;border-radius:25px;
 background:#ff4da6;color:white;font-size:15px;
 }
 
+/* HEARTS */
 .heart{
 position:fixed;color:#ff4da6;
 animation:fall linear;
@@ -42,6 +65,16 @@ animation:fall linear;
 @keyframes fall{
 0%{transform:translateY(-10vh);}
 100%{transform:translateY(110vh);}
+}
+
+/* CAKE */
+.cake{
+font-size:80px;
+animation:pop 1s infinite alternate;
+}
+@keyframes pop{
+from{transform:scale(1);}
+to{transform:scale(1.2);}
 }
 </style>
 </head>
@@ -62,11 +95,11 @@ animation:fall linear;
 let c=document.getElementById("container");
 let pages=[],i=0;
 
-/* ADD PAGE */
-function add(html){
+function add(html,bg){
 let d=document.createElement("div");
 d.className="page";
-d.innerHTML=html;
+d.style.backgroundImage=`url(${bg})`;
+d.innerHTML=`<div class="overlay"></div>`+html;
 c.appendChild(d);
 pages.push(d);
 }
@@ -74,42 +107,47 @@ pages.push(d);
 /* FIRST PAGE */
 add(`
 <div class="text">
-<h2 style="color:#ff4da6;">Mnku ji ❤️</h2>
+<h2 class="big">Mnku ji ❤️</h2>
 Aaj ka din normal nahi hai... 💖<br><br>
 Kyuki aaj meri duniya ki sabse pyaari ladki ka birthday hai ❤️
-</div>`);
+</div>`,"bg1.jpg");
 
-/* SWEET MESSAGES */
-[
-"Aap meri life ki sabse beautiful feeling ho 💖",
-"Jab bhi aap haste ho sab perfect lagta hai 😭❤️",
-"Main aapko kabhi khona nahi chahta 💔",
-"Aap meri aadat ban chuke ho 💞",
-"Aapke bina sab adhoora lagta hai 💖",
-"Main hamesha aapko khush dekhna chahta hu ❤️",
-"Aap meri duniya ho 💘"
-].forEach(t=>add(`<div class="text">${t}</div>`));
+/* HER PHOTOS */
+let her=["her1.jpg","her2.jpg","her3.jpg","her4.jpg","her5.jpg","her6.jpg","her7.jpg","her8.jpg"];
+her.forEach((p,i)=>{
+add(`
+<img src="${p}">
+<div class="caption">${i%2==0?"Only you 💖":"How cute yrr 😭❤️"}</div>
+`,"bg2.jpg");
+});
 
-/* PHOTOS (ALL) */
-let photos=[
-"her1.jpg","her2.jpg","her3.jpg","her4.jpg","her5.jpg","her6.jpg","her7.jpg","her8.jpg",
-"us1.jpg","us2.jpg","us3.jpg","us4.jpg","us5.jpg"
-];
-photos.forEach(p=>add(`<img src="${p}">`));
+/* US PHOTOS */
+let us=["us1.jpg","us2.jpg","us3.jpg","us4.jpg","us5.jpg"];
+us.forEach(p=>{
+add(`
+<img src="${p}">
+<div class="caption">Beautiful moments ❤️✨</div>
+`,"bg3.jpg");
+});
 
-/* VIDEOS */
+/* VIDEOS (EDIT) */
 ["v1.mp4","v2.mp4","usv1.mp4","usv2.mp4"].forEach(v=>{
-add(`<video src="${v}" autoplay muted loop playsinline></video>`);
+add(`<video src="${v}" autoplay loop controls></video>`,"bg4.jpg");
 });
 
 /* CAKE ANIMATION */
-add(`<div class="text"><h1>🎂</h1>Make a wish Mnku ji 💖</div>`);
+add(`
+<div class="text">
+<div class="cake">🎂</div>
+Make a wish Mnku ji 💖<br>
+✨ Blow the candle ✨
+</div>`,"bg5.jpg");
 
-/* CAKE VIDEO */
-add(`<video src="cake.mp4" autoplay muted loop playsinline></video>`);
+/* CAKE VIDEO (SOUND ON) */
+add(`<video src="cake.mp4" autoplay controls></video>`,"bg6.jpg");
 
-/* MSG VIDEO */
-add(`<video src="msg.mp4" autoplay muted loop playsinline></video>`);
+/* MSG VIDEO (SOUND ON) */
+add(`<video src="msg.mp4" autoplay controls></video>`,"bg7.jpg");
 
 /* FINAL PAGE */
 add(`
@@ -117,9 +155,9 @@ add(`
 <div class="big">I LOVE YOU MNKU JI ❤️</div><br>
 Happy Birthday ❤️<br>
 Aap meri sab kuch ho 💖
-</div>`);
+</div>`,"bg8.jpg");
 
-/* NAVIGATION */
+/* NAV */
 function show(n){
 pages.forEach(p=>p.classList.remove("active"));
 pages[n].classList.add("active");
@@ -132,7 +170,7 @@ function prev(){if(i>0){i--;show(i)}}
 /* MUSIC */
 let m=document.getElementById("music"),play=false;
 function musicToggle(){
-if(play){m.pause()}else{m.play()}
+play?m.pause():m.play();
 play=!play;
 }
 
