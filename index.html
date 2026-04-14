@@ -5,47 +5,70 @@
 <title>Mnku ji ❤️</title>
 
 <style>
-body{margin:0;font-family:sans-serif;color:#fff;overflow:hidden;background:black;}
+body{
+margin:0;
+font-family:sans-serif;
+background:linear-gradient(135deg,#ff4da6,#000);
+color:white;
+overflow:hidden;
+}
 
 .page{
-position:absolute;top:0;left:0;width:100%;height:100vh;
-display:flex;flex-direction:column;justify-content:center;align-items:center;
-opacity:0;transition:0.6s;
+position:absolute;
+top:0;left:0;
+width:100%;height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+opacity:0;
+transition:0.5s;
 }
 .active{opacity:1;}
 
 img,video{
-max-width:100%;
-max-height:75vh;
+width:90%;
+max-height:70vh;
+object-fit:cover;
 border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
 
-.text{padding:20px;text-align:center;font-size:1.5rem;}
-.caption{margin-top:10px;color:#ff85c1;font-size:1.2rem;}
-.footer{position:absolute;bottom:10px;font-size:0.9rem;color:#ff4da6;}
+.text{
+font-size:1.5rem;
+text-align:center;
+padding:20px;
+}
 
-.big{
-font-size:3rem;color:#ff4da6;
-text-shadow:0 0 20px #ff4da6;
+.caption{
+margin-top:10px;
+color:#ffd1e6;
 }
 
 .controls{
-position:fixed;bottom:20px;width:100%;
-display:flex;justify-content:center;gap:10px;
-}
-button{
-padding:10px 18px;border:none;border-radius:25px;
-background:#ff4da6;color:white;font-size:15px;
+position:fixed;
+bottom:20px;
+width:100%;
+display:flex;
+justify-content:center;
+gap:10px;
 }
 
-.heart{
-position:fixed;color:#ff4da6;
-animation:fall linear;
+button{
+padding:10px 15px;
+border:none;
+border-radius:20px;
+background:#ff4da6;
+color:white;
+font-size:15px;
 }
-@keyframes fall{
-0%{transform:translateY(-10vh);}
-100%{transform:translateY(110vh);}
+
+.big{
+font-size:2.5rem;
+color:#fff;
+text-shadow:0 0 20px #ff4da6;
 }
+
 </style>
 </head>
 
@@ -62,154 +85,101 @@ animation:fall linear;
 </div>
 
 <script>
-let c=document.getElementById("container");
-let pages=[],i=0;
 
-function add(html){
-let d=document.createElement("div");
-d.className="page";
-d.innerHTML=html;
-c.appendChild(d);
-pages.push(d);
+let container=document.getElementById("container");
+let pages=[];
+let index=0;
+
+function add(content){
+let div=document.createElement("div");
+div.className="page";
+div.innerHTML=content;
+container.appendChild(div);
+pages.push(div);
 }
 
 /* INTRO */
 add(`
 <div class="text">
-<h2 class="big">Mnku ji ❤️</h2>
+<h1 class="big">Mnku ji ❤️</h1>
 Aaj ka din normal nahi hai... 💖<br><br>
 Kyuki aaj meri duniya ki sabse pyaari ladki ka birthday hai ❤️
 </div>
-<div class="footer">Only for you 💖</div>
 `);
 
-/* EMOTIONAL MESSAGES */
+/* MESSAGES */
 [
 "Aap meri life ki sabse beautiful feeling ho 💖",
 "Aapki smile meri sabse badi weakness hai 😭❤️",
 "Jab bhi aap haste ho sab perfect lagta hai 💞",
-"Main bas aapko hamesha khush dekhna chahta hu ❤️",
 "Aap meri aadat ban chuke ho 💘",
-"Aap bina sab adhoora lagta hai 💔",
-"Main aapse bohot zyada pyaar karta hu 💖"
+"Aap bina sab adhoora lagta hai 💔"
 ].forEach(t=>{
-add(`<div class="text">${t}</div><div class="footer">Forever yours ❤️</div>`);
+add(`<div class="text">${t}</div>`);
 });
 
-/* HER PHOTOS + UNIQUE CAPTIONS */
-let her=[
-["her1.jpg","Only you 💖"],
-["her2.jpg","How cute yrr 😭❤️"],
-["her3.jpg","Meri pyari si duniya 💞"],
-["her4.jpg","Itni beautiful kaise ho 😭💖"],
-["her5.jpg","Dil chura liya aapne ❤️"],
-["her6.jpg","Bas aap hi aap ho 💘"],
-["her7.jpg","Meri favourite smile 😭💖"],
-["her8.jpg","Perfect ho aap ❤️"]
-];
-
-her.forEach(p=>{
+/* PHOTOS (SAFE LOAD) */
+function imgPage(src,text){
 add(`
-<img src="${p[0]}">
-<div class="caption">${p[1]}</div>
-<div class="footer">Only for you 💖</div>
+<img src="${src}" onerror="this.src='https://picsum.photos/400/600'">
+<div class="caption">${text}</div>
 `);
-});
+}
 
-/* US PHOTOS */
-let us=[
-["us1.jpg","Beautiful moments ❤️"],
-["us2.jpg","Best memories 💞"],
-["us3.jpg","Hum dono ❤️"],
-["us4.jpg","Perfect together 💘"],
-["us5.jpg","Forever us 💖"]
-];
+imgPage("her1.jpg","Only you 💖");
+imgPage("her2.jpg","How cute 😭❤️");
+imgPage("her3.jpg","Meri pyari si duniya 💞");
 
-us.forEach(p=>{
-add(`
-<img src="${p[0]}">
-<div class="caption">${p[1]}</div>
-<div class="footer">Forever yours ❤️</div>
-`);
-});
+imgPage("us1.jpg","Beautiful moment ❤️");
+imgPage("us2.jpg","Perfect together 💘");
 
-/* EDIT VIDEOS (MUTED) */
-["v1.mp4","v2.mp4","usv1.mp4","usv2.mp4"].forEach(v=>{
-add(`
-<video src="${v}" autoplay muted loop playsinline></video>
-<div class="caption">Memories ❤️✨</div>
-<div class="footer">Only for you 💖</div>
-`);
-});
+/* VIDEOS */
+add(`<video src="v1.mp4" autoplay muted loop></video><div class="caption">Memories ❤️</div>`);
+add(`<video src="usv1.mp4" autoplay muted loop></video><div class="caption">Us ❤️</div>`);
 
-/* CAKE ANIMATION */
-add(`
-<div class="text">
-🎂✨<br>
-Make a wish Mnku ji 💖<br>
-Blow the candle 🕯️💫
-</div>
-<div class="footer">Your day ❤️</div>
-`);
+/* CAKE */
+add(`<video src="cake.mp4" controls autoplay></video>`);
 
-/* CAKE VIDEO (SOUND ON) */
-add(`
-<video src="cake.mp4" autoplay controls></video>
-<div class="footer">Celebration time 🎉</div>
-`);
-
-/* MESSAGE VIDEO (SOUND ON) */
-add(`
-<video src="msg.mp4" autoplay controls></video>
-<div class="footer">Special message 💌</div>
-`);
-
-/* FINAL MESSAGE BEFORE I LOVE YOU */
-add(`
-<div class="text">
-Aap meri life ka sabse important part ho ❤️<br><br>
-Main bas itna chahta hu ki aap hamesha mere saath raho 💖<br><br>
-Aur main hamesha aapko khush rakhu 💘
-</div>
-<div class="footer">Forever ❤️</div>
-`);
+/* MESSAGE VIDEO */
+add(`<video src="msg.mp4" controls autoplay></video>`);
 
 /* FINAL */
 add(`
 <div class="text">
-<div class="big">I LOVE YOU MNKU JI ❤️</div><br>
-Happy Birthday 💖<br>
-Aap meri duniya ho ❤️
+Aap meri life ka sabse important part ho ❤️<br><br>
+<h1 class="big">I LOVE YOU ❤️</h1>
 </div>
 `);
 
-/* NAV */
-function show(n){
+function show(i){
 pages.forEach(p=>p.classList.remove("active"));
-pages[n].classList.add("active");
+pages[i].classList.add("active");
 }
+
+function next(){
+if(index<pages.length-1){
+index++;
+show(index);
+}
+}
+
+function prev(){
+if(index>0){
+index--;
+show(index);
+}
+}
+
 show(0);
 
-function next(){if(i<pages.length-1){i++;show(i)}}
-function prev(){if(i>0){i--;show(i)}}
+let music=document.getElementById("music");
+let playing=false;
 
-/* MUSIC */
-let m=document.getElementById("music"),play=false;
 function musicToggle(){
-play?m.pause():m.play();
-play=!play;
+playing?music.pause():music.play();
+playing=!playing;
 }
 
-/* HEARTS */
-setInterval(()=>{
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.animationDuration=(Math.random()*3+2)+"s";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),5000);
-},300);
 </script>
 
 </body>
